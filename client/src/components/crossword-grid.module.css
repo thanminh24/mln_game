@@ -1,0 +1,24 @@
+.cell-revealed {
+  animation: revealCell 0.4s ease-out forwards;
+  animation-delay: var(--stagger-delay, 0ms);
+}
+
+@keyframes revealCell {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cell-keyword-flash {
+  animation: keywordFlash 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes keywordFlash {
+  0% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

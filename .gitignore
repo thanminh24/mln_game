@@ -34,3 +34,11 @@ game_state.json
 # Env / secrets
 .env
 .env.*
+
+# Node.js
+node_modules/
+client/dist/
+server/dist/
+
+# Vite
+client/.vite/
