@@ -111,9 +111,9 @@ export function CrosswordGamePanel({ state }: Props) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="question-modal-title"
-            className="max-h-[92dvh] w-full max-w-7xl overflow-y-auto rounded-xl border border-border bg-surface shadow-2xl"
+            className="flex max-h-[92dvh] w-full max-w-7xl flex-col xl:h-[92dvh] rounded-xl border border-border bg-surface shadow-2xl"
           >
-            <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-4">
+            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-border px-5 py-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
                   Hàng {(modalRowIdx ?? 0) + 1} · {currentRow.wordLength} chữ
@@ -132,7 +132,7 @@ export function CrosswordGamePanel({ state }: Props) {
 
             <div
               className={[
-                "grid min-w-0 gap-5 p-5 xl:p-6",
+                "grid min-w-0 min-h-0 flex-1 gap-5 overflow-y-auto p-5 xl:p-6",
                 currentRow.promptImage
                   ? "xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.9fr)]"
                   : "grid-cols-1",

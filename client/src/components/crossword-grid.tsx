@@ -83,7 +83,7 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
                       className={[
                         "aspect-square min-w-0 rounded-[2px]",
                         "flex items-center justify-center select-none",
-                        "font-mono text-[clamp(0.42rem,1vw,0.82rem)] font-black leading-none",
+                        "font-mono text-[clamp(0.65rem,1.6vw,1.25rem)] font-black leading-none",
                         cellState,
                         revealed ? styles["cell-revealed"] : "",
                         !revealed && isKeywordCol ? styles["cell-keyword-pulse"] : "",
