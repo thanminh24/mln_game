@@ -1,186 +1,219 @@
 // Client-side game data. Keep in sync with server/src/game/game-data.ts.
-// answer_display intentionally omitted from G1 rows — MC reads from printed script.
 
-export interface G1Row {
-  word_ascii: string;
-  word_length: number;
-  col_offset: number;
-  question_text: string;
+export interface CrosswordOption {
+  id: string;
+  text: string;
 }
 
-export interface G2Question {
-  question_text: string;
-  opt_A: string;
-  opt_B: string;
-  opt_C: string;
-  opt_D: string;
-  correct_answer: string;
+export interface CrosswordRow {
+  answerAscii: string;
+  wordLength: number;
+  colOffset: number;
+  questionText: string;
+  answerText: string;
+  correctOptionId: string;
+  options: CrosswordOption[];
+  promptImage?: string;
+  explanation: string;
 }
 
-export interface G2Round {
-  round_name: string;
-  image_file: string;
-  round_explanation: string;
-  cau_hoi: G2Question[];
-}
+export const KEYWORD = "LÒNG YÊU NƯỚC";
+export const KEYWORD_ASCII = "LONGYEUNUOC";
 
-export const G1_DATA: G1Row[] = [
+export const CROSSWORD_ROWS: CrosswordRow[] = [
   {
-    word_ascii: "YTHUCXAHOI",
-    word_length: 10,
-    col_offset: 12,
-    question_text:
-      "Theo triết học Mác - Lênin, mặt tinh thần của đời sống xã hội được gọi là gì?",
+    answerAscii: "LACHAU",
+    wordLength: 6,
+    colOffset: 12,
+    questionText:
+      "Dù đời sống vật chất đã phát triển hiện đại nhưng những hủ tục tinh thần này vẫn tồn tại là do tính chất gì của ý thức xã hội?",
+    answerText: "LẠC HẬU",
+    correctOptionId: "2",
+    options: [
+      { id: "1", text: "Vượt trước tồn tại xã hội" },
+      { id: "2", text: "Lạc hậu hơn tồn tại xã hội" },
+      { id: "3", text: "Có tính kế thừa" },
+      { id: "4", text: "Mang tính giai cấp" },
+    ],
+    promptImage: "/images/hu-tuc-lac-hau.png",
+    explanation:
+      "Ý thức xã hội thường lạc hậu hơn tồn tại xã hội do sức mạnh của thói quen, tập quán và tính bảo thủ của các hình thái ý thức.",
   },
   {
-    word_ascii: "DIEUKIENTUNHIEN",
-    word_length: 15,
-    col_offset: 10,
-    question_text:
-      "Yếu tố nào của tồn tại xã hội gồm khí hậu, đất đai, sông ngòi, tài nguyên và vị trí địa lý?",
+    answerAscii: "TONTAIXAHOI",
+    wordLength: 11,
+    colOffset: 11,
+    questionText:
+      "Những điều kiện sinh hoạt vật chất như địa lý, sông ngòi, bão lũ này tạo nên phạm trù nào quyết định tâm lý dân tộc?",
+    answerText: "TỒN TẠI XÃ HỘI",
+    correctOptionId: "3",
+    options: [
+      { id: "1", text: "Ý thức xã hội" },
+      { id: "2", text: "Kiến trúc thượng tầng" },
+      { id: "3", text: "Tồn tại xã hội" },
+      { id: "4", text: "Lực lượng sản xuất" },
+    ],
+    promptImage: "/images/ban-do-viet-nam.png",
+    explanation:
+      "Tồn tại xã hội là toàn bộ sinh hoạt vật chất và điều kiện sinh hoạt vật chất của xã hội, bao gồm hoàn cảnh địa lý, dân số và phương thức sản xuất.",
   },
   {
-    word_ascii: "PHUONGTHUCSANXUATVATCHAT",
-    word_length: 24,
-    col_offset: 10,
-    question_text:
-      "Trong ba yếu tố của tồn tại xã hội, yếu tố nào là cơ bản nhất, giữ vai trò quyết định?",
+    answerAscii: "DANSO",
+    wordLength: 5,
+    colOffset: 10,
+    questionText:
+      "Ngoài hoàn cảnh địa lý và phương thức sản xuất, yếu tố nào của tồn tại xã hội đóng vai trò là nguồn lực con người để xây dựng và bảo vệ đất nước?",
+    answerText: "DÂN SỐ",
+    correctOptionId: "1",
+    options: [
+      { id: "1", text: "Dân số" },
+      { id: "2", text: "Ý thức chính trị" },
+      { id: "3", text: "Quan hệ sản xuất" },
+      { id: "4", text: "Hệ tư tưởng" },
+    ],
+    explanation:
+      "Dân số và mật độ dân số là một trong ba yếu tố cơ bản của tồn tại xã hội, là lực lượng người trực tiếp tạo ra lịch sử.",
   },
   {
-    word_ascii: "TONTAIXAHOI",
-    word_length: 11,
-    col_offset: 10,
-    question_text:
-      "Theo chủ nghĩa duy vật lịch sử, cái gì giữ vai trò quyết định đối với ý thức xã hội?",
+    answerAscii: "GIAICAP",
+    wordLength: 7,
+    colOffset: 12,
+    questionText:
+      "Khi xã hội có sự phân chia lợi ích, ý thức xã hội phản ánh địa vị và nguyện vọng của các tầng lớp khác nhau. Đây là tính ... của ý thức xã hội.",
+    answerText: "GIAI CẤP",
+    correctOptionId: "4",
+    options: [
+      { id: "1", text: "Kế thừa" },
+      { id: "2", text: "Lạc hậu" },
+      { id: "3", text: "Vượt trước" },
+      { id: "4", text: "Giai cấp" },
+    ],
+    explanation:
+      "Trong xã hội có giai cấp, ý thức xã hội mang tính giai cấp vì các giai cấp khác nhau có điều kiện vật chất và lợi ích khác nhau.",
   },
   {
-    word_ascii: "YTHUCXAHOITHONGTHUONG",
-    word_length: 21,
-    col_offset: 9,
-    question_text:
-      "Loại ý thức xã hội nào hình thành tự phát từ đời sống hằng ngày, phong phú nhưng chưa được hệ thống hóa?",
+    answerAscii: "YTHUCXAHOI",
+    wordLength: 10,
+    colOffset: 12,
+    questionText:
+      "Những tình cảm, niềm tin và truyền thống đùm bọc lẫn nhau trong thời kỳ COVID-19 này được gọi chung là gì?",
+    answerText: "Ý THỨC XÃ HỘI",
+    correctOptionId: "2",
+    options: [
+      { id: "1", text: "Tồn tại xã hội" },
+      { id: "2", text: "Ý thức xã hội" },
+      { id: "3", text: "Kiến trúc thượng tầng" },
+      { id: "4", text: "Hệ tư tưởng" },
+    ],
+    promptImage: "/images/ho-tro-covid.png",
+    explanation:
+      "Ý thức xã hội là mặt tinh thần của đời sống xã hội, bao gồm tâm lý xã hội và hệ tư tưởng, phản ánh tồn tại xã hội.",
   },
   {
-    word_ascii: "YTHUCXAHOIVUOTTRUOCTONTAIXAHOI",
-    word_length: 30,
-    col_offset: 0,
-    question_text:
-      "Biểu hiện nào cho thấy ý thức xã hội có thể phản ánh đúng quy luật khách quan và dự báo tương lai trước khi tồn tại xã hội biến đổi đầy đủ?",
+    answerAscii: "KETHUA",
+    wordLength: 6,
+    colOffset: 11,
+    questionText:
+      "Truyền thống yêu nước được truyền từ đời này sang đời khác, tạo nên sức mạnh xuyên suốt hàng nghìn năm lịch sử. Điều này minh chứng cho tính chất gì của ý thức xã hội?",
+    answerText: "KẾ THỪA",
+    correctOptionId: "3",
+    options: [
+      { id: "1", text: "Lạc hậu" },
+      { id: "2", text: "Giai cấp" },
+      { id: "3", text: "Kế thừa" },
+      { id: "4", text: "Vượt trước" },
+    ],
+    explanation:
+      "Tính kế thừa của ý thức xã hội thể hiện ở chỗ các tư tưởng, giá trị văn hóa được truyền và phát triển qua các thế hệ.",
   },
   {
-    word_ascii: "YTHUCDAODUC",
-    word_length: 11,
-    col_offset: 8,
-    question_text:
-      "Trong các hình thái ý thức xã hội, hình thái nào phản ánh các chuẩn mực thiện - ác, tốt - xấu, lương tâm và trách nhiệm của con người?",
+    answerAscii: "PHUONGTHUCSANXUAT",
+    wordLength: 17,
+    colOffset: 10,
+    questionText:
+      "Đây là yếu tố cơ bản nhất của tồn tại xã hội, quy định nên lối sống trọng tình nghĩa và tính cộng đồng của người Việt?",
+    answerText: "PHƯƠNG THỨC SẢN XUẤT",
+    correctOptionId: "1",
+    options: [
+      { id: "1", text: "Phương thức sản xuất" },
+      { id: "2", text: "Điều kiện tự nhiên" },
+      { id: "3", text: "Dân số" },
+      { id: "4", text: "Truyền thống văn hóa" },
+    ],
+    promptImage: "/images/canh-tac-lua-nuoc.jpg",
+    explanation:
+      "Phương thức sản xuất vật chất là yếu tố cơ bản nhất của tồn tại xã hội, quyết định toàn bộ các quan hệ xã hội và ý thức xã hội.",
+  },
+  {
+    answerAscii: "QUYETDINH",
+    wordLength: 9,
+    colOffset: 5,
+    questionText:
+      "Điền vào chỗ trống: Theo triết học Mác - Lênin, đời sống vật chất (tồn tại xã hội) đóng vai trò _______ đời sống tinh thần (ý thức xã hội).",
+    answerText: "QUYẾT ĐỊNH",
+    correctOptionId: "2",
+    options: [
+      { id: "1", text: "Phản ánh" },
+      { id: "2", text: "Quyết định" },
+      { id: "3", text: "Bị quyết định bởi" },
+      { id: "4", text: "Độc lập với" },
+    ],
+    explanation:
+      "Quy luật cơ bản: tồn tại xã hội quyết định ý thức xã hội. Tuy nhiên ý thức xã hội có tính độc lập tương đối và tác động trở lại.",
+  },
+  {
+    answerAscii: "VUOTTRUOC",
+    wordLength: 9,
+    colOffset: 11,
+    questionText:
+      "Những tư tưởng cứu nước của Chủ tịch Hồ Chí Minh có khả năng dự báo xu hướng lịch sử khi tồn tại xã hội chưa biến đổi hết là do tính chất gì của ý thức xã hội?",
+    answerText: "VƯỢT TRƯỚC",
+    correctOptionId: "4",
+    options: [
+      { id: "1", text: "Lạc hậu" },
+      { id: "2", text: "Kế thừa" },
+      { id: "3", text: "Giai cấp" },
+      { id: "4", text: "Vượt trước" },
+    ],
+    explanation:
+      "Ý thức xã hội có thể vượt trước tồn tại xã hội khi phản ánh đúng quy luật khách quan, từ đó dự báo và định hướng tương lai.",
+  },
+  {
+    answerAscii: "TACDONGTROLAI",
+    wordLength: 13,
+    colOffset: 8,
+    questionText:
+      "Lòng yêu nước, một hình thái ý thức tinh thần, đã biến thành sức mạnh vật chất đánh bại vũ khí hiện đại trong chiến dịch này. Đây là sự ... của ý thức xã hội.",
+    answerText: "TÁC ĐỘNG TRỞ LẠI",
+    correctOptionId: "1",
+    options: [
+      { id: "1", text: "Tác động trở lại" },
+      { id: "2", text: "Lạc hậu so với" },
+      { id: "3", text: "Quyết định" },
+      { id: "4", text: "Kế thừa từ" },
+    ],
+    promptImage: "/images/dien-bien-phu.png",
+    explanation:
+      "Ý thức xã hội như lòng yêu nước và ý chí chiến đấu tác động trở lại tồn tại xã hội khi trở thành động lực vật chất, sức mạnh tổ chức và hành động.",
+  },
+  {
+    answerAscii: "BIENCHUNG",
+    wordLength: 9,
+    colOffset: 8,
+    questionText:
+      "Mối quan hệ tương tác hai chiều, không tách rời giữa vật chất (tồn tại xã hội) và tinh thần (ý thức xã hội) được gọi là mối quan hệ gì?",
+    answerText: "BIỆN CHỨNG",
+    correctOptionId: "3",
+    options: [
+      { id: "1", text: "Nhân quả" },
+      { id: "2", text: "Siêu hình" },
+      { id: "3", text: "Biện chứng" },
+      { id: "4", text: "Tất định" },
+    ],
+    explanation:
+      "Mối quan hệ biện chứng: tồn tại xã hội quyết định ý thức xã hội, nhưng ý thức xã hội có tính độc lập tương đối và tác động trở lại tồn tại xã hội.",
   },
 ];
 
-export const G2_DATA: G2Round[] = [
-  {
-    round_name: "THỰC TIỄN 1: BẢN LĨNH LỊCH SỬ",
-    image_file: "round1-dien-bien-phu.jpg",
-    round_explanation:
-      "Bức ảnh mô tả trận chiến ĐIỆN BIÊN PHỦ lừng lẫy năm châu. Sức mạnh của lòng yêu nước và tinh thần đại đoàn kết đã giúp một dân tộc có nền kinh tế nông nghiệp lạc hậu đánh bại một thế lực phương Tây hiện đại. Điều này minh chứng: Ý thức xã hội có tính độc lập tương đối và có sự tác động trở lại mạnh mẽ, chuyển hóa thành sức mạnh vật chất khổng lồ để cải tạo Tồn tại xã hội.",
-    cau_hoi: [
-      {
-        question_text:
-          "Trong lịch sử kháng chiến chống thực dân Pháp (1945 - 1954), chiến dịch nào được ghi nhận là đỉnh cao thắng lợi, trực tiếp dẫn đến việc ký kết Hiệp định Giơ-ne-vơ?",
-        opt_A: "Chiến dịch Biên giới Thu Đông",
-        opt_B: "Chiến dịch Tây Bắc",
-        opt_C: "Chiến dịch Điện Biên Phủ",
-        opt_D: "Chiến dịch Thượng Lào",
-        correct_answer: "C",
-      },
-      {
-        question_text:
-          "Xét dưới góc độ Triết học Mác - Lênin, tinh thần yêu nước, ý chí quyết chiến quyết thắng và lòng tự hào dân tộc thuộc về phạm trù nào sau đây?",
-        opt_A: "Tồn tại xã hội",
-        opt_B: "Cơ sở hạ tầng",
-        opt_C: "Ý thức xã hội",
-        opt_D: "Lực lượng sản xuất",
-        correct_answer: "C",
-      },
-      {
-        question_text:
-          "Để bảo đảm hậu cần, hàng vạn dân công hỏa tuyến đã sử dụng phương tiện nào để vận chuyển hơn 2 vạn tấn lương thực?",
-        opt_A: "Xe ba gác",
-        opt_B: "Xe thồ ngựa kéo",
-        opt_C: "Xe đạp thồ",
-        opt_D: "Xe cơ giới hoán cải",
-        correct_answer: "C",
-      },
-      {
-        question_text:
-          "Sức mạnh lòng yêu nước giúp nông nghiệp lạc hậu đánh bại thế lực hiện đại. Hiện tượng này chứng minh cho luận điểm nào?",
-        opt_A: "Ý thức xã hội luôn luôn lạc hậu hơn tồn tại xã hội.",
-        opt_B: "Tồn tại xã hội hoàn toàn độc lập với ý thức xã hội.",
-        opt_C: "Tính độc lập tương đối và sự tác động trở lại mạnh mẽ của YTXH đối với TTXH.",
-        opt_D: "Ý thức xã hội không có khả năng chuyển hóa thành sức mạnh vật chất.",
-        correct_answer: "C",
-      },
-      {
-        question_text:
-          "Lá cờ 'Quyết chiến - Quyết thắng' tung bay trên nóc hầm chỉ huy của viên tướng Pháp nào?",
-        opt_A: "Tướng Navarre (Na-va)",
-        opt_B: "Tướng De Castries (Đờ Cát-tơ-ri)",
-        opt_C: "Tướng Cogny (Cô-nhi)",
-        opt_D: "Tướng Salan (Sa-lăng)",
-        correct_answer: "B",
-      },
-    ],
-  },
-  {
-    round_name: "THỰC TIỄN 2: SỨC MẠNH THỜI BÌNH",
-    image_file: "round2-cuu-tro-lu.jpg",
-    round_explanation:
-      "Đứng trước điều kiện tự nhiên khắc nghiệt (Tồn tại xã hội), người Việt đã hình thành Ý thức xã hội tất yếu: Lòng yêu nước và tinh thần 'Lá lành đùm lá rách'. Sự quyên góp, hỗ trợ nhau trong bão lũ chính là minh chứng rõ nét cho việc Ý thức xã hội biến thành sức mạnh vật chất to lớn để tác động ngược lại, tái thiết Tồn tại xã hội.",
-    cau_hoi: [
-      {
-        question_text:
-          "Nước ta thường xuyên đối mặt với điều kiện thời tiết khắc nghiệt. Theo triết học Mác - Lênin, yếu tố này thuộc về phạm trù nào?",
-        opt_A: "Quan hệ sản xuất",
-        opt_B: "Điều kiện tự nhiên (Tồn tại xã hội)",
-        opt_C: "Kiến trúc thượng tầng",
-        opt_D: "Lực lượng sản xuất",
-        correct_answer: "B",
-      },
-      {
-        question_text:
-          "Người Việt đã sớm hình thành truyền thống đùm bọc lẫn nhau. Theo chủ nghĩa duy vật lịch sử, sự hình thành này minh chứng cho quy luật nào?",
-        opt_A: "Tồn tại xã hội quyết định ý thức xã hội",
-        opt_B: "Ý thức xã hội quyết định tồn tại xã hội",
-        opt_C: "Ý thức xã hội luôn vượt trước tồn tại xã hội",
-        opt_D: "Tồn tại xã hội lệ thuộc vào ý thức xã hội",
-        correct_answer: "A",
-      },
-      {
-        question_text:
-          "Truyền thống 'thương người như thể thương thân' được các thế hệ người Việt gìn giữ. Điều này thể hiện đặc tính nào của Ý thức xã hội?",
-        opt_A: "Tính vượt trước",
-        opt_B: "Tính kế thừa",
-        opt_C: "Tính giai cấp",
-        opt_D: "Tính bảo thủ",
-        correct_answer: "B",
-      },
-      {
-        question_text:
-          "Tình cảm trừu tượng lập tức biến thành hành động thiết thực đóng góp sức người, sức của để tái thiết cuộc sống. Đây là biểu hiện của nguyên lý nào?",
-        opt_A: "YTXH luôn tụt hậu hơn TTXH",
-        opt_B: "YTXH sinh ra TTXH",
-        opt_C: "Sự tác động trở lại của YTXH đối với TTXH",
-        opt_D: "TTXH không thể thay đổi",
-        correct_answer: "C",
-      },
-      {
-        question_text:
-          "Tinh thần đoàn kết của người Việt Nam không chỉ là lý thuyết suông mà đã biến thành:",
-        opt_A: "Khẩu hiệu phong trào",
-        opt_B: "Một hệ thống pháp luật bắt buộc",
-        opt_C: "Sự phản ánh thụ động",
-        opt_D: "Sức mạnh vật chất to lớn để cải tạo xã hội",
-        correct_answer: "D",
-      },
-    ],
-  },
-];
+export const CASE_STUDY_SUMMARY =
+  "Lòng yêu nước là một hình thái ý thức xã hội: nó phản ánh điều kiện sinh tồn, lịch sử dựng nước và giữ nước của dân tộc, đồng thời trở thành sức mạnh tinh thần định hướng hành động, tổ chức cộng đồng và tác động trở lại đời sống vật chất.";

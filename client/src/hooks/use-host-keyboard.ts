@@ -17,45 +17,19 @@ export function useHostKeyboard(state: GameState) {
       ) return;
 
       switch (e.code) {
-        case "F1":
+        case "Digit1":
+        case "Digit2":
+        case "Digit3":
+        case "Digit4":
           e.preventDefault();
-          if (state.mode === "game1") {
-            if (state.g1_current_q !== null && !state.g1_buzz_active && !state.g1_buzz_winner) {
-              emit("host:open_buzz");
-            }
-          } else {
-            if (!state.g2_cho_phep_vote && !state.g2_da_cham_diem && !state.g2_done) {
-              emit("host:open_vote");
-            }
+          if (state.activeRow !== null && !state.answerRevealed) {
+            emit("game:choose_option", { optionId: e.code.replace("Digit", "") });
           }
           break;
 
-        case "F2":
+        case "KeyK":
           e.preventDefault();
-          if (state.g1_buzz_winner) emit("host:correct");
-          break;
-
-        case "F3":
-          e.preventDefault();
-          if (state.g1_buzz_winner) {
-            emit("host:wrong");
-          } else if (state.g1_buzz_active) {
-            emit("host:close_buzz");
-          } else if (state.g2_cho_phep_vote) {
-            emit("host:close_vote");
-          }
-          break;
-
-        case "F4":
-          e.preventDefault();
-          if (
-            state.mode === "game2" &&
-            !state.g2_cho_phep_vote &&
-            !state.g2_da_cham_diem &&
-            !state.g2_done
-          ) {
-            emit("host:score");
-          }
+          if (!state.keywordSolved && state.openedRows.length >= 2) emit("game:solve_keyword");
           break;
 
         case "Escape":

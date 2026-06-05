@@ -1,8 +1,0 @@
-row_index,word_ascii,word_length,col_offset,keyword_col,question_text,answer_display
-0,YTHUCXAHOI,10,12,Y,"Theo triết học Mác - Lênin, mặt tinh thần của đời sống xã hội được gọi là gì?","Ý THỨC XÃ HỘI"
-1,DIEUKIENTUNHIEN,15,10,I,"Yếu tố nào của tồn tại xã hội gồm khí hậu, đất đai, sông ngòi, tài nguyên và vị trí địa lý?","ĐIỀU KIỆN TỰ NHIÊN"
-2,PHUONGTHUCSANXUATVATCHAT,24,10,U,"Trong ba yếu tố của tồn tại xã hội, yếu tố nào là cơ bản nhất, giữ vai trò quyết định?","PHƯƠNG THỨC SẢN XUẤT VẬT CHẤT"
-3,TONTAIXAHOI,11,10,O,"Theo chủ nghĩa duy vật lịch sử, cái gì giữ vai trò quyết định đối với ý thức xã hội?","TỒN TẠI XÃ HỘI"
-4,YTHUCXAHOITHONGTHUONG,21,9,N,"Loại ý thức xã hội nào hình thành tự phát từ đời sống hằng ngày, phong phú nhưng chưa được hệ thống hóa?","Ý THỨC XÃ HỘI THÔNG THƯỜNG"
-5,YTHUCXAHOIVUOTTRUOCTONTAIXAHOI,30,0,U,"Biểu hiện nào cho thấy ý thức xã hội có thể phản ánh đúng quy luật khách quan và dự báo tương lai trước khi tồn tại xã hội biến đổi đầy đủ?","Ý THỨC XÃ HỘI VƯỢT TRƯỚC TỒN TẠI XÃ HỘI"
-6,YTHUCDAODUC,11,8,O,"Trong các hình thái ý thức xã hội, hình thái nào phản ánh các chuẩn mực thiện - ác, tốt - xấu, lương tâm và trách nhiệm của con người?","Ý THỨC ĐẠO ĐỨC"

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { GameState } from "./types/shared";
-import { G1_DATA, G2_DATA } from "./game/game-data";
+import { CASE_STUDY_SUMMARY, CROSSWORD_ROWS, KEYWORD, KEYWORD_ASCII } from "./game/game-data";
 
 export function createRouter(getState: () => GameState) {
   const router = Router();
@@ -10,7 +10,12 @@ export function createRouter(getState: () => GameState) {
   });
 
   router.get("/api/data", (_req, res) => {
-    res.json({ rows: G1_DATA, rounds: G2_DATA });
+    res.json({
+      rows: CROSSWORD_ROWS,
+      keyword: KEYWORD,
+      keywordAscii: KEYWORD_ASCII,
+      caseStudySummary: CASE_STUDY_SUMMARY,
+    });
   });
 
   return router;

@@ -1,24 +1,34 @@
 .cell-revealed {
-  animation: revealCell 0.4s ease-out forwards;
-  animation-delay: var(--stagger-delay, 0ms);
+  animation: cellReveal 0.25s ease-out var(--stagger-delay, 0ms) both;
 }
 
-@keyframes revealCell {
-  0% {
-    opacity: 0;
-    transform: translateY(-16px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes cellReveal {
+  from { opacity: 0; transform: scaleY(0); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.cell-keyword-pulse {
+  animation: keywordPulse 2s ease-in-out infinite;
+}
+
+@keyframes keywordPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+  50% { box-shadow: 0 0 6px 2px rgba(255, 215, 0, 0.3); }
 }
 
 .cell-keyword-flash {
-  animation: keywordFlash 0.6s ease-in-out infinite alternate;
+  animation: keywordFlash 0.6s ease-in-out 3;
 }
 
 @keyframes keywordFlash {
-  0% { opacity: 1; }
-  100% { opacity: 0.5; }
+  0%, 100% { background: #FFFFFF; }
+  50% { background: #FFD700; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell-revealed,
+  .cell-keyword-pulse,
+  .cell-keyword-flash {
+    animation: none;
+  }
 }

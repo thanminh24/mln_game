@@ -1,46 +1,44 @@
-// Inline SVG — no external library. TTXH ↔ YTXH dialectic relationship.
+// Inline SVG keeps the summary page dependency-free and projector-friendly.
 export function DialecticDiagram() {
   return (
     <svg
-      viewBox="0 0 600 180"
-      className="w-full max-w-2xl mx-auto"
-      aria-label="Sơ đồ quan hệ biện chứng TTXH và YTXH"
+      viewBox="0 0 720 240"
+      className="mx-auto w-full max-w-4xl"
+      role="img"
+      aria-label="Sơ đồ quan hệ biện chứng giữa tồn tại xã hội và ý thức xã hội"
     >
-      {/* TTXH box */}
-      <rect x="20" y="60" width="160" height="60" rx="12" fill="#1e40af" />
-      <text x="100" y="86" textAnchor="middle" fill="white" fontFamily="Be Vietnam Pro, sans-serif" fontSize="14" fontWeight="700">
-        TỒN TẠI
-      </text>
-      <text x="100" y="106" textAnchor="middle" fill="white" fontFamily="Be Vietnam Pro, sans-serif" fontSize="14" fontWeight="700">
-        XÃ HỘI
-      </text>
-
-      {/* YTXH box */}
-      <rect x="420" y="60" width="160" height="60" rx="12" fill="#b45309" />
-      <text x="500" y="86" textAnchor="middle" fill="white" fontFamily="Be Vietnam Pro, sans-serif" fontSize="14" fontWeight="700">
-        Ý THỨC
-      </text>
-      <text x="500" y="106" textAnchor="middle" fill="white" fontFamily="Be Vietnam Pro, sans-serif" fontSize="14" fontWeight="700">
-        XÃ HỘI
-      </text>
-
-      {/* Top arrow: TTXH → quyết định → YTXH */}
       <defs>
         <marker id="arrow-right" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280" />
+          <polygon points="0 0, 10 3.5, 0 7" fill="#FFD700" />
         </marker>
         <marker id="arrow-left" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
-          <polygon points="10 0, 0 3.5, 10 7" fill="#6b7280" />
+          <polygon points="10 0, 0 3.5, 10 7" fill="#FFD700" />
         </marker>
       </defs>
-      <line x1="185" y1="75" x2="415" y2="75" stroke="#6b7280" strokeWidth="2" markerEnd="url(#arrow-right)" />
-      <text x="300" y="68" textAnchor="middle" fill="#9ca3af" fontFamily="Be Vietnam Pro, sans-serif" fontSize="11">
+
+      <rect x="24" y="72" width="210" height="96" rx="10" fill="#000000" stroke="#B8960C" strokeWidth="2" />
+      <text x="129" y="110" textAnchor="middle" fill="#FFD700" fontFamily="Be Vietnam Pro, sans-serif" fontSize="18" fontWeight="900">
+        TỒN TẠI
+      </text>
+      <text x="129" y="137" textAnchor="middle" fill="#FFFFFF" fontFamily="Be Vietnam Pro, sans-serif" fontSize="18" fontWeight="900">
+        XÃ HỘI
+      </text>
+
+      <rect x="486" y="72" width="210" height="96" rx="10" fill="#000000" stroke="#B8960C" strokeWidth="2" />
+      <text x="591" y="110" textAnchor="middle" fill="#FFD700" fontFamily="Be Vietnam Pro, sans-serif" fontSize="18" fontWeight="900">
+        Ý THỨC
+      </text>
+      <text x="591" y="137" textAnchor="middle" fill="#FFFFFF" fontFamily="Be Vietnam Pro, sans-serif" fontSize="18" fontWeight="900">
+        XÃ HỘI
+      </text>
+
+      <line x1="246" y1="100" x2="474" y2="100" stroke="#FFD700" strokeWidth="3" markerEnd="url(#arrow-right)" />
+      <text x="360" y="82" textAnchor="middle" fill="#FFFFFF" fontFamily="Be Vietnam Pro, sans-serif" fontSize="16" fontWeight="700">
         quyết định
       </text>
 
-      {/* Bottom arrow: YTXH → tác động trở lại → TTXH */}
-      <line x1="415" y1="105" x2="185" y2="105" stroke="#6b7280" strokeWidth="2" markerEnd="url(#arrow-left)" />
-      <text x="300" y="122" textAnchor="middle" fill="#9ca3af" fontFamily="Be Vietnam Pro, sans-serif" fontSize="11">
+      <line x1="474" y1="142" x2="246" y2="142" stroke="#FFD700" strokeWidth="3" markerEnd="url(#arrow-left)" />
+      <text x="360" y="174" textAnchor="middle" fill="#A3A3A3" fontFamily="Be Vietnam Pro, sans-serif" fontSize="16" fontWeight="700">
         tác động trở lại
       </text>
     </svg>

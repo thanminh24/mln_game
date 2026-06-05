@@ -1,37 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { GameState, ServerToClientEvents, ClientToServerEvents, TEAMS } from "../types/shared";
+import { GameState, ServerToClientEvents, ClientToServerEvents } from "../types/shared";
 
 type AppSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
 // Keep in sync with server/src/game/game-state.ts initialState()
 function buildInitialState(): GameState {
-  const scores = Object.fromEntries(TEAMS.map((t) => [t, 0])) as Record<
-    (typeof TEAMS)[number],
-    number
-  >;
-  const votes = Object.fromEntries(TEAMS.map((t) => [t, null])) as Record<
-    (typeof TEAMS)[number],
-    string | null
-  >;
   return {
-    mode: "game1",
-    g1_opened: [],
-    g1_current_q: null,
-    g1_buzz_active: false,
-    g1_buzz_winner: null,
-    g1_buzz_type: null,
-    g1_keyword_solved: false,
-    g1_timer_seconds: null,
-    g2_round: 0,
-    g2_question: 0,
-    g2_revealed_slices: [],
-    g2_done: false,
-    g2_cho_phep_vote: false,
-    g2_da_cham_diem: false,
-    g2_timer_seconds: null,
-    scores,
-    votes,
+    openedRows: [],
+    activeRow: null,
+    wrongOptionIds: [],
+    answerRevealed: false,
+    keywordSolved: false,
+    score: 0,
   };
 }
 
@@ -64,7 +45,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     s.on("connect", () => {
       console.log("[socket] connected:", s.id);
       setConnected(true);
-      s.emit("client:request_state");
+      s.emit("game:request_state");
     });
 
     s.on("disconnect", () => {
@@ -72,7 +53,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       setConnected(false);
     });
 
-    s.on("state:update", (newState) => {
+    s.on("game:state", (newState) => {
       setState(newState);
     });
 
