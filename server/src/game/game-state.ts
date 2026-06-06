@@ -22,8 +22,6 @@ export function initialState(): GameState {
     score: 0,
     teams: DEFAULT_TEAMS.map((team) => ({ ...team })),
     activeTeamId: DEFAULT_TEAMS[0].id,
-    wager: 0,
-    usedWagerTeamIds: [],
     maxScore: MAX_SCORE,
   };
 }

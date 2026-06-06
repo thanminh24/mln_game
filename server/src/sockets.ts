@@ -46,12 +46,6 @@ export function registerSocketHandlers(
       broadcast();
     });
 
-    socket.on("game:set_wager", ({ wager }) => {
-      if (typeof wager !== "number") return;
-      setState(engine.setWager(getState(), wager));
-      broadcast();
-    });
-
     socket.on("game:solve_keyword", (payload) => {
       setState(engine.solveKeyword(getState(), payload?.correct !== false));
       broadcast();

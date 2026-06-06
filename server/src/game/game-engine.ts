@@ -2,7 +2,6 @@ import { GameState } from "../types/shared";
 import { initialState } from "./game-state";
 import { CROSSWORD_ROWS } from "./game-data";
 
-const WAGER_BONUS = 30;
 const KEYWORD_BONUS = 60;
 
 function openRow(state: GameState, rowIdx: number): number[] {
@@ -23,29 +22,6 @@ function scoreActiveTeam(state: GameState, delta: number): GameState {
     ...state,
     teams,
     score: activeTeam?.score ?? state.score,
-  };
-}
-
-function setActiveTeamScore(state: GameState, score: number): GameState {
-  const teams = state.teams.map((team) =>
-    team.id === state.activeTeamId ? { ...team, score } : team
-  );
-
-  return {
-    ...state,
-    teams,
-    score,
-  };
-}
-
-function markWagerUsed(state: GameState): GameState {
-  if (state.wager !== WAGER_BONUS || state.usedWagerTeamIds.includes(state.activeTeamId)) {
-    return state;
-  }
-
-  return {
-    ...state,
-    usedWagerTeamIds: [...state.usedWagerTeamIds, state.activeTeamId],
   };
 }
 
@@ -82,13 +58,12 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
 
   if (optionId === row.correctOptionId) {
     const nextState = {
-      ...markWagerUsed(state),
+      ...state,
       openedRows: openRow(state, state.activeRow),
       answerRevealed: true,
-      wager: 0,
     };
 
-    return scoreActiveTeam(nextState, row.points + state.wager);
+    return scoreActiveTeam(nextState, row.points);
   }
 
   const wrongAnswers = state.wrongOptionIds.includes(optionId)
@@ -100,14 +75,13 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
   const shouldReveal = wrongTeams.length >= state.teams.length;
 
   return {
-    ...markWagerUsed(scoreActiveTeam(state, state.wager > 0 ? -state.wager : 0)),
+    ...state,
     wrongOptionIds: wrongAnswers,
     wrongTeamIds: wrongTeams,
     answerRevealed: shouldReveal,
     openedRows: shouldReveal
       ? openRow(state, state.activeRow)
       : state.openedRows,
-    wager: 0,
   };
 }
 
@@ -115,16 +89,12 @@ export function solveKeyword(state: GameState, correct = true): GameState {
   if (state.keywordSolved) return state;
 
   if (!correct) {
-    return {
-      ...state,
-      wager: 0,
-    };
+    return state;
   }
 
   return scoreActiveTeam({
     ...state,
     keywordSolved: true,
-    wager: 0,
   }, KEYWORD_BONUS);
 }
 
@@ -136,26 +106,6 @@ export function selectTeam(state: GameState, teamId: string): GameState {
     ...state,
     activeTeamId: teamId,
     score: activeTeam.score,
-    wager: 0,
-  };
-}
-
-export function setWager(state: GameState, wager: number): GameState {
-  if (!Number.isFinite(wager) || wager < 0 || state.answerRevealed || state.keywordSolved) {
-    return state;
-  }
-
-  if (wager !== 0 && wager !== WAGER_BONUS) {
-    return state;
-  }
-
-  if (wager === WAGER_BONUS && state.usedWagerTeamIds.includes(state.activeTeamId)) {
-    return state;
-  }
-
-  return {
-    ...state,
-    wager: Math.floor(wager),
   };
 }
 

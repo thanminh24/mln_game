@@ -17,8 +17,6 @@ export interface GameState {
   score: number;
   teams: TeamScore[];
   activeTeamId: string;
-  wager: number;
-  usedWagerTeamIds: string[];
   maxScore: number;
 }
 
@@ -31,7 +29,6 @@ export interface ClientToServerEvents {
   "game:select_row": (payload: { idx: number }) => void;
   "game:choose_option": (payload: { optionId: string }) => void;
   "game:select_team": (payload: { teamId: string }) => void;
-  "game:set_wager": (payload: { wager: number }) => void;
   "game:solve_keyword": (payload?: { correct?: boolean }) => void;
   "game:request_state": () => void;
 }

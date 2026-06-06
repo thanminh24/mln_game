@@ -6,7 +6,6 @@ import { CROSSWORD_ROWS } from "../data/game-data";
 import { CrosswordGrid } from "./crossword-grid";
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
-const WAGER_BONUS = 30;
 const KEYWORD_BONUS = 60;
 const DIFFICULTY_LABELS = {
   easy: "Dễ",
@@ -22,10 +21,9 @@ export function CrosswordGamePanel({ state }: Props) {
   const { emit } = useSocket();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalRowIdx, setModalRowIdx] = useState<number | null>(null);
-  const { openedRows, activeRow, wrongOptionIds, wrongTeamIds, answerRevealed, keywordSolved, teams, activeTeamId, wager, usedWagerTeamIds, maxScore } = state;
+  const { openedRows, activeRow, wrongOptionIds, wrongTeamIds, answerRevealed, keywordSolved, teams, activeTeamId, maxScore } = state;
   const currentRow = modalRowIdx !== null ? CROSSWORD_ROWS[modalRowIdx] : null;
   const activeTeam = teams.find((team) => team.id === activeTeamId) ?? teams[0];
-  const activeTeamUsedWager = usedWagerTeamIds.includes(activeTeamId);
   const modalRowIsActive = modalRowIdx !== null && activeRow === modalRowIdx;
   const modalRowIsOpened = modalRowIdx !== null && openedRows.includes(modalRowIdx);
   const modalAnswerRevealed = modalRowIsOpened || (modalRowIsActive && answerRevealed);
@@ -218,44 +216,6 @@ export function CrosswordGamePanel({ state }: Props) {
                     </span>
                   </div>
                 </div>
-
-                {!modalAnswerRevealed && modalRowIsActive && !activeTeamFailedCurrentRow && (
-                  <div className="rounded-lg border border-[#333333] bg-black p-4">
-                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
-                        Cược điểm
-                      </p>
-                      <p className="text-sm font-bold text-yellow">
-                        {activeTeamUsedWager
-                          ? `${activeTeam?.name} đã dùng cược`
-                          : `Đúng +${currentRow.points + wager} · Sai -${wager}`}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => emit("game:set_wager", { wager: wager === WAGER_BONUS ? 0 : WAGER_BONUS })}
-                        disabled={activeTeamUsedWager}
-                        className={[
-                          "min-h-10 rounded-md border px-4 py-2 text-sm font-black transition-colors",
-                          "disabled:cursor-not-allowed disabled:opacity-50",
-                          wager === WAGER_BONUS
-                            ? "border-yellow bg-yellow text-black"
-                            : "border-[#333333] bg-surface text-white hover:border-yellow",
-                        ].join(" ")}
-                      >
-                        Cược +{WAGER_BONUS}
-                      </button>
-                      {wager === WAGER_BONUS && (
-                        <button
-                          onClick={() => emit("game:set_wager", { wager: 0 })}
-                          className="min-h-10 rounded-md border border-[#333333] bg-surface px-4 py-2 text-sm font-black text-white transition-colors hover:border-yellow"
-                        >
-                          Hủy cược
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
 
                 <p className="whitespace-normal break-words text-[clamp(2rem,3vw,3.25rem)] font-black leading-tight text-white">
                   {currentRow.questionText}
