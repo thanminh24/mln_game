@@ -21,7 +21,7 @@ function buildInitialState(): GameState {
       { id: "group-4", name: "Nhóm 4", color: "#22c55e", score: 0 },
       { id: "group-6", name: "Nhóm 6", color: "#a855f7", score: 0 },
     ],
-    activeTeamId: "group-1",
+    activeTeamId: null,
     maxScore: 220,
   };
 }

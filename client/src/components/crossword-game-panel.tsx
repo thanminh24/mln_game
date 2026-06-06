@@ -23,12 +23,15 @@ export function CrosswordGamePanel({ state }: Props) {
   const [modalRowIdx, setModalRowIdx] = useState<number | null>(null);
   const { openedRows, activeRow, wrongOptionIds, wrongTeamIds, answerRevealed, keywordSolved, teams, activeTeamId, maxScore } = state;
   const currentRow = modalRowIdx !== null ? CROSSWORD_ROWS[modalRowIdx] : null;
-  const activeTeam = teams.find((team) => team.id === activeTeamId) ?? teams[0];
+  const activeTeam = activeTeamId === null
+    ? null
+    : teams.find((team) => team.id === activeTeamId) ?? null;
   const modalRowIsActive = modalRowIdx !== null && activeRow === modalRowIdx;
   const modalRowIsOpened = modalRowIdx !== null && openedRows.includes(modalRowIdx);
   const modalAnswerRevealed = modalRowIsOpened || (modalRowIsActive && answerRevealed);
   const modalWrongOptionIds = modalRowIsActive ? wrongOptionIds : [];
-  const activeTeamFailedCurrentRow = modalRowIsActive && wrongTeamIds.includes(activeTeamId);
+  const activeTeamFailedCurrentRow = activeTeamId !== null && modalRowIsActive && wrongTeamIds.includes(activeTeamId);
+  const canAnswerCurrentRow = modalRowIsActive && activeTeamId !== null && !activeTeamFailedCurrentRow;
   const teamsLeft = Math.max(teams.length - wrongTeamIds.length, 0);
   const revealedByAttempts = answerRevealed && wrongTeamIds.length >= teams.length;
   const progressPct = (openedRows.length / CROSSWORD_ROWS.length) * 100;
@@ -90,14 +93,18 @@ export function CrosswordGamePanel({ state }: Props) {
           <div className="grid gap-2 md:grid-cols-5">
             {teams.map((team) => {
               const selected = team.id === activeTeamId;
+              const teamFailedCurrentRow =
+                activeRow !== null && !answerRevealed && wrongTeamIds.includes(team.id);
 
               return (
                 <button
                   key={team.id}
                   onClick={() => emit("game:select_team", { teamId: team.id })}
+                  disabled={teamFailedCurrentRow}
                   className={[
                     "min-h-20 rounded-lg border bg-surface p-3 text-left transition-colors",
                     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow",
+                    "disabled:cursor-not-allowed disabled:opacity-45",
                     selected ? "border-yellow" : "border-border hover:border-yellow-dim",
                   ].join(" ")}
                   style={{ boxShadow: selected ? `inset 0 0 0 2px ${team.color}` : undefined }}
@@ -150,13 +157,15 @@ export function CrosswordGamePanel({ state }: Props) {
           <div className="grid gap-2 md:grid-cols-2">
             <button
               onClick={() => emit("game:solve_keyword", { correct: true })}
-              className="min-h-12 rounded-md border border-yellow-dim bg-[#1A1600] px-4 py-2 text-lg font-black text-yellow hover:bg-yellow hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+              disabled={activeTeamId === null}
+              className="min-h-12 rounded-md border border-yellow-dim bg-[#1A1600] px-4 py-2 text-lg font-black text-yellow hover:bg-yellow hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow disabled:cursor-not-allowed disabled:opacity-45"
             >
               Hàng dọc đúng +{KEYWORD_BONUS}
             </button>
             <button
               onClick={() => emit("game:solve_keyword", { correct: false })}
-              className="min-h-12 rounded-md border border-wrong-dim px-4 py-2 text-lg font-black text-red-200 hover:bg-wrong-dim/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+              disabled={activeTeamId === null}
+              className="min-h-12 rounded-md border border-wrong-dim px-4 py-2 text-lg font-black text-red-200 hover:bg-wrong-dim/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow disabled:cursor-not-allowed disabled:opacity-45"
             >
               Hàng dọc sai 0 điểm
             </button>
@@ -212,7 +221,7 @@ export function CrosswordGamePanel({ state }: Props) {
                       {currentRow.points} điểm
                     </span>
                     <span className="rounded-full border border-[#333333] bg-black px-4 py-2 text-base font-bold text-white">
-                      {activeTeam?.name}
+                      {activeTeam?.name ?? "Chon nhom tra loi"}
                     </span>
                   </div>
                 </div>
@@ -220,6 +229,12 @@ export function CrosswordGamePanel({ state }: Props) {
                 <p className="whitespace-normal break-words text-[clamp(2rem,3vw,3.25rem)] font-black leading-tight text-white">
                   {currentRow.questionText}
                 </p>
+
+                {!modalAnswerRevealed && modalRowIsActive && activeTeamId === null && (
+                  <div className="rounded-lg border border-yellow-dim bg-[#1A1600] p-4 text-base font-bold text-yellow">
+                    Chon nhom da gianh quyen tra loi truoc khi bam dap an.
+                  </div>
+                )}
 
                 {!modalAnswerRevealed && activeTeamFailedCurrentRow && (
                   <div className="rounded-lg border border-wrong-dim bg-[#1C0606] p-4 text-base font-bold text-red-200">
@@ -246,7 +261,7 @@ export function CrosswordGamePanel({ state }: Props) {
                             emit("game:choose_option", { optionId: option.id });
                           }
                         }}
-                        disabled={modalAnswerRevealed || isWrong || !modalRowIsActive || activeTeamFailedCurrentRow}
+                        disabled={modalAnswerRevealed || isWrong || !canAnswerCurrentRow}
                         className={[
                           "min-h-24 rounded-lg border p-5 text-left transition-colors",
                           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow",

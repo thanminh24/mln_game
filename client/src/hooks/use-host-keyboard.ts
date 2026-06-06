@@ -22,14 +22,14 @@ export function useHostKeyboard(state: GameState) {
         case "Digit3":
         case "Digit4":
           e.preventDefault();
-          if (state.activeRow !== null && !state.answerRevealed) {
+          if (state.activeRow !== null && !state.answerRevealed && state.activeTeamId !== null) {
             emit("game:choose_option", { optionId: e.code.replace("Digit", "") });
           }
           break;
 
         case "KeyK":
           e.preventDefault();
-          if (!state.keywordSolved && state.openedRows.length >= 2) {
+          if (!state.keywordSolved && state.openedRows.length >= 2 && state.activeTeamId !== null) {
             emit("game:solve_keyword", { correct: true });
           }
           break;

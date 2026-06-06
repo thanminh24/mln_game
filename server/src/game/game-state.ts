@@ -21,7 +21,7 @@ export function initialState(): GameState {
     keywordSolved: false,
     score: 0,
     teams: DEFAULT_TEAMS.map((team) => ({ ...team })),
-    activeTeamId: DEFAULT_TEAMS[0].id,
+    activeTeamId: null,
     maxScore: MAX_SCORE,
   };
 }

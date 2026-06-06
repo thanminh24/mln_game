@@ -11,6 +11,10 @@ function openRow(state: GameState, rowIdx: number): number[] {
 }
 
 function scoreActiveTeam(state: GameState, delta: number): GameState {
+  if (state.activeTeamId === null) {
+    return state;
+  }
+
   const teams = state.teams.map((team) =>
     team.id === state.activeTeamId
       ? { ...team, score: Math.max(0, team.score + delta) }
@@ -35,6 +39,7 @@ export function selectQuestion(state: GameState, idx: number): GameState {
     activeRow: idx,
     wrongOptionIds: [],
     wrongTeamIds: [],
+    activeTeamId: null,
     answerRevealed: false,
   };
 }
@@ -42,7 +47,8 @@ export function selectQuestion(state: GameState, idx: number): GameState {
 export function chooseAnswer(state: GameState, optionId: string): GameState {
   if (
     state.activeRow === null ||
-    state.answerRevealed
+    state.answerRevealed ||
+    state.activeTeamId === null
   ) {
     return state;
   }
@@ -69,15 +75,17 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
   const wrongAnswers = state.wrongOptionIds.includes(optionId)
     ? state.wrongOptionIds
     : [...state.wrongOptionIds, optionId];
-  const wrongTeams = state.wrongTeamIds.includes(state.activeTeamId)
+  const activeTeamId = state.activeTeamId;
+  const wrongTeams = state.wrongTeamIds.includes(activeTeamId)
     ? state.wrongTeamIds
-    : [...state.wrongTeamIds, state.activeTeamId];
+    : [...state.wrongTeamIds, activeTeamId];
   const shouldReveal = wrongTeams.length >= state.teams.length;
 
   return {
     ...state,
     wrongOptionIds: wrongAnswers,
     wrongTeamIds: wrongTeams,
+    activeTeamId: null,
     answerRevealed: shouldReveal,
     openedRows: shouldReveal
       ? openRow(state, state.activeRow)
@@ -86,10 +94,13 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
 }
 
 export function solveKeyword(state: GameState, correct = true): GameState {
-  if (state.keywordSolved) return state;
+  if (state.keywordSolved || state.activeTeamId === null) return state;
 
   if (!correct) {
-    return state;
+    return {
+      ...state,
+      activeTeamId: null,
+    };
   }
 
   return scoreActiveTeam({
@@ -101,6 +112,13 @@ export function solveKeyword(state: GameState, correct = true): GameState {
 export function selectTeam(state: GameState, teamId: string): GameState {
   const activeTeam = state.teams.find((team) => team.id === teamId);
   if (!activeTeam) return state;
+  if (
+    state.activeRow !== null &&
+    !state.answerRevealed &&
+    state.wrongTeamIds.includes(teamId)
+  ) {
+    return state;
+  }
 
   return {
     ...state,
