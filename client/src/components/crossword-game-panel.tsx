@@ -108,7 +108,7 @@ export function CrosswordGamePanel({ state }: Props) {
           </div>
         </div>
 
-        <div className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="flex min-w-0 flex-col gap-4">
           <div className="min-w-0">
             <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -139,7 +139,7 @@ export function CrosswordGamePanel({ state }: Props) {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
               Hàng dọc +{KEYWORD_BONUS}
             </p>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
               {teams.map((team) => (
                 <button
                   key={team.id}
