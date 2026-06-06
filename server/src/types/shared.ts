@@ -16,7 +16,7 @@ export interface GameState {
   keywordSolved: boolean;
   score: number;
   teams: TeamScore[];
-  activeTeamId: string | null;
+  activeTeamId: string;
   maxScore: number;
 }
 
