@@ -3,6 +3,7 @@ import { initialState } from "./game-state";
 import { CROSSWORD_ROWS } from "./game-data";
 
 const KEYWORD_BONUS = 60;
+const MAX_WRONG_ATTEMPTS = 3;
 
 function openRow(state: GameState, rowIdx: number): number[] {
   return state.openedRows.includes(rowIdx)
@@ -11,8 +12,12 @@ function openRow(state: GameState, rowIdx: number): number[] {
 }
 
 function scoreActiveTeam(state: GameState, delta: number): GameState {
+  return scoreTeam(state, state.activeTeamId, delta);
+}
+
+function scoreTeam(state: GameState, teamId: string, delta: number): GameState {
   const teams = state.teams.map((team) =>
-    team.id === state.activeTeamId
+    team.id === teamId
       ? { ...team, score: Math.max(0, team.score + delta) }
       : team
   );
@@ -56,6 +61,10 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
     return state;
   }
 
+  if (state.wrongOptionIds.includes(optionId)) {
+    return state;
+  }
+
   if (optionId === row.correctOptionId) {
     const nextState = {
       ...state,
@@ -72,7 +81,7 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
   const wrongTeams = state.wrongTeamIds.includes(state.activeTeamId)
     ? state.wrongTeamIds
     : [...state.wrongTeamIds, state.activeTeamId];
-  const shouldReveal = wrongTeams.length >= state.teams.length;
+  const shouldReveal = wrongAnswers.length >= MAX_WRONG_ATTEMPTS;
 
   return {
     ...state,
@@ -85,17 +94,22 @@ export function chooseAnswer(state: GameState, optionId: string): GameState {
   };
 }
 
-export function solveKeyword(state: GameState, correct = true): GameState {
+export function solveKeyword(state: GameState, correct = true, teamId = state.activeTeamId): GameState {
   if (state.keywordSolved) return state;
 
   if (!correct) {
     return state;
   }
 
-  return scoreActiveTeam({
+  if (!state.teams.some((team) => team.id === teamId)) {
+    return state;
+  }
+
+  return scoreTeam({
     ...state,
+    activeTeamId: teamId,
     keywordSolved: true,
-  }, KEYWORD_BONUS);
+  }, teamId, KEYWORD_BONUS);
 }
 
 export function selectTeam(state: GameState, teamId: string): GameState {

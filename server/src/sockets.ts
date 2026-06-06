@@ -47,7 +47,7 @@ export function registerSocketHandlers(
     });
 
     socket.on("game:solve_keyword", (payload) => {
-      setState(engine.solveKeyword(getState(), payload?.correct !== false));
+      setState(engine.solveKeyword(getState(), payload?.correct !== false, payload?.teamId));
       broadcast();
     });
 

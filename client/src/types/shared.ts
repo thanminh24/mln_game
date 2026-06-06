@@ -27,6 +27,6 @@ export interface ClientToServerEvents {
   "game:select_row": (payload: { idx: number }) => void;
   "game:choose_option": (payload: { optionId: string }) => void;
   "game:select_team": (payload: { teamId: string }) => void;
-  "game:solve_keyword": (payload?: { correct?: boolean }) => void;
+  "game:solve_keyword": (payload?: { correct?: boolean; teamId?: string }) => void;
   "game:request_state": () => void;
 }
