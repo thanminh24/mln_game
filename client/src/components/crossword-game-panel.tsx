@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { GameState } from "../types/shared";
 import { useSocket } from "../hooks/use-socket";
 import { CROSSWORD_ROWS } from "../data/game-data";
 import { CrosswordGrid } from "./crossword-grid";
 
-const MAX_WRONG_ATTEMPTS = 3;
 const OPTION_LABELS = ["A", "B", "C", "D"];
+const WAGER_BONUS = 30;
+const KEYWORD_BONUS = 60;
+const DIFFICULTY_LABELS = {
+  easy: "Dễ",
+  medium: "Vừa",
+  hard: "Khó",
+};
 
 interface Props {
   state: GameState;
@@ -15,19 +22,23 @@ export function CrosswordGamePanel({ state }: Props) {
   const { emit } = useSocket();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalRowIdx, setModalRowIdx] = useState<number | null>(null);
-  const { openedRows, activeRow, wrongOptionIds, answerRevealed, keywordSolved } = state;
+  const { openedRows, activeRow, wrongOptionIds, wrongTeamIds, answerRevealed, keywordSolved, teams, activeTeamId, wager, usedWagerTeamIds, maxScore } = state;
   const currentRow = modalRowIdx !== null ? CROSSWORD_ROWS[modalRowIdx] : null;
+  const activeTeam = teams.find((team) => team.id === activeTeamId) ?? teams[0];
+  const activeTeamUsedWager = usedWagerTeamIds.includes(activeTeamId);
   const modalRowIsActive = modalRowIdx !== null && activeRow === modalRowIdx;
   const modalRowIsOpened = modalRowIdx !== null && openedRows.includes(modalRowIdx);
   const modalAnswerRevealed = modalRowIsOpened || (modalRowIsActive && answerRevealed);
   const modalWrongOptionIds = modalRowIsActive ? wrongOptionIds : [];
-  const attemptsLeft = Math.max(MAX_WRONG_ATTEMPTS - wrongOptionIds.length, 0);
-  const revealedByAttempts = answerRevealed && wrongOptionIds.length >= MAX_WRONG_ATTEMPTS;
+  const activeTeamFailedCurrentRow = modalRowIsActive && wrongTeamIds.includes(activeTeamId);
+  const teamsLeft = Math.max(teams.length - wrongTeamIds.length, 0);
+  const revealedByAttempts = answerRevealed && wrongTeamIds.length >= teams.length;
   const progressPct = (openedRows.length / CROSSWORD_ROWS.length) * 100;
+  const allRowsOpened = openedRows.length === CROSSWORD_ROWS.length;
 
   useEffect(() => {
-    if (keywordSolved) setModalOpen(false);
-  }, [keywordSolved]);
+    if (allRowsOpened) setModalOpen(false);
+  }, [allRowsOpened]);
 
   function handleReset() {
     if (window.confirm("Đặt lại toàn bộ trò chơi? Mọi điểm số sẽ bị xoá.")) {
@@ -38,7 +49,7 @@ export function CrosswordGamePanel({ state }: Props) {
   }
 
   function openRowQuestion(idx: number) {
-    if (keywordSolved) return;
+    if (allRowsOpened) return;
     setModalRowIdx(idx);
     if (!openedRows.includes(idx)) {
       emit("game:select_row", { idx });
@@ -58,6 +69,14 @@ export function CrosswordGamePanel({ state }: Props) {
           </h1>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          {allRowsOpened && (
+            <Link
+              to="/summary"
+              className="min-h-11 rounded-md border border-yellow-dim bg-[#1A1600] px-4 py-2 text-sm font-bold text-yellow hover:bg-yellow hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+            >
+              Tổng kết
+            </Link>
+          )}
           <button
             id="host-reset-btn"
             onClick={handleReset}
@@ -69,6 +88,40 @@ export function CrosswordGamePanel({ state }: Props) {
       </header>
 
       <section className="flex min-w-0 flex-col gap-4 p-4 xl:p-6">
+        <div className="grid gap-3 xl:grid-cols-[1fr_auto]">
+          <div className="grid gap-2 md:grid-cols-5">
+            {teams.map((team) => {
+              const selected = team.id === activeTeamId;
+
+              return (
+                <button
+                  key={team.id}
+                  onClick={() => emit("game:select_team", { teamId: team.id })}
+                  className={[
+                    "min-h-20 rounded-lg border bg-surface p-3 text-left transition-colors",
+                    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow",
+                    selected ? "border-yellow" : "border-border hover:border-yellow-dim",
+                  ].join(" ")}
+                  style={{ boxShadow: selected ? `inset 0 0 0 2px ${team.color}` : undefined }}
+                >
+                  <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                    <span className="h-3 w-3 rounded-full" style={{ backgroundColor: team.color }} />
+                    {team.name}
+                  </span>
+                  <span className="mt-2 block text-3xl font-black leading-none text-white">
+                    {team.score}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="rounded-lg border border-yellow-dim bg-[#1A1600] px-4 py-3 text-right">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Mốc hàng ngang</p>
+            <p className="text-3xl font-black leading-none text-yellow">{maxScore}</p>
+          </div>
+        </div>
+
         <div className="min-w-0">
           <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -96,12 +149,20 @@ export function CrosswordGamePanel({ state }: Props) {
         </div>
 
         {!keywordSolved && (
-          <button
-            onClick={() => emit("game:solve_keyword")}
-            className="min-h-12 rounded-md border border-yellow-dim bg-[#1A1600] px-4 py-2 text-lg font-black text-yellow hover:bg-yellow hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
-          >
-            Hiện đáp án hàng dọc
-          </button>
+          <div className="grid gap-2 md:grid-cols-2">
+            <button
+              onClick={() => emit("game:solve_keyword", { correct: true })}
+              className="min-h-12 rounded-md border border-yellow-dim bg-[#1A1600] px-4 py-2 text-lg font-black text-yellow hover:bg-yellow hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+            >
+              Hàng dọc đúng +{KEYWORD_BONUS}
+            </button>
+            <button
+              onClick={() => emit("game:solve_keyword", { correct: false })}
+              className="min-h-12 rounded-md border border-wrong-dim px-4 py-2 text-lg font-black text-red-200 hover:bg-wrong-dim/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+            >
+              Hàng dọc sai 0 điểm
+            </button>
+          </div>
         )}
       </section>
 
@@ -142,14 +203,69 @@ export function CrosswordGamePanel({ state }: Props) {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                       {!modalAnswerRevealed && (
                     <span className="rounded-full border border-yellow-dim bg-[#1A1600] px-4 py-2 text-base font-bold text-yellow">
-                      Còn {attemptsLeft} lượt sai
+                      Còn {teamsLeft} nhóm
                     </span>
                   )}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full border border-[#333333] bg-black px-4 py-2 text-base font-bold text-white">
+                      {DIFFICULTY_LABELS[currentRow.difficulty]}
+                    </span>
+                    <span className="rounded-full border border-yellow-dim bg-[#1A1600] px-4 py-2 text-base font-bold text-yellow">
+                      {currentRow.points} điểm
+                    </span>
+                    <span className="rounded-full border border-[#333333] bg-black px-4 py-2 text-base font-bold text-white">
+                      {activeTeam?.name}
+                    </span>
+                  </div>
                 </div>
+
+                {!modalAnswerRevealed && modalRowIsActive && !activeTeamFailedCurrentRow && (
+                  <div className="rounded-lg border border-[#333333] bg-black p-4">
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                        Cược điểm
+                      </p>
+                      <p className="text-sm font-bold text-yellow">
+                        {activeTeamUsedWager
+                          ? `${activeTeam?.name} đã dùng cược`
+                          : `Đúng +${currentRow.points + wager} · Sai -${wager}`}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => emit("game:set_wager", { wager: wager === WAGER_BONUS ? 0 : WAGER_BONUS })}
+                        disabled={activeTeamUsedWager}
+                        className={[
+                          "min-h-10 rounded-md border px-4 py-2 text-sm font-black transition-colors",
+                          "disabled:cursor-not-allowed disabled:opacity-50",
+                          wager === WAGER_BONUS
+                            ? "border-yellow bg-yellow text-black"
+                            : "border-[#333333] bg-surface text-white hover:border-yellow",
+                        ].join(" ")}
+                      >
+                        Cược +{WAGER_BONUS}
+                      </button>
+                      {wager === WAGER_BONUS && (
+                        <button
+                          onClick={() => emit("game:set_wager", { wager: 0 })}
+                          className="min-h-10 rounded-md border border-[#333333] bg-surface px-4 py-2 text-sm font-black text-white transition-colors hover:border-yellow"
+                        >
+                          Hủy cược
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <p className="whitespace-normal break-words text-[clamp(2rem,3vw,3.25rem)] font-black leading-tight text-white">
                   {currentRow.questionText}
                 </p>
+
+                {!modalAnswerRevealed && activeTeamFailedCurrentRow && (
+                  <div className="rounded-lg border border-wrong-dim bg-[#1C0606] p-4 text-base font-bold text-red-200">
+                    {activeTeam?.name} đã trả lời sai hàng này. Hãy chọn nhóm khác để giành quyền trả lời.
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   {currentRow.options.map((option, optionIdx) => {
@@ -170,7 +286,7 @@ export function CrosswordGamePanel({ state }: Props) {
                             emit("game:choose_option", { optionId: option.id });
                           }
                         }}
-                        disabled={modalAnswerRevealed || isWrong || !modalRowIsActive}
+                        disabled={modalAnswerRevealed || isWrong || !modalRowIsActive || activeTeamFailedCurrentRow}
                         className={[
                           "min-h-24 rounded-lg border p-5 text-left transition-colors",
                           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow",
@@ -211,7 +327,7 @@ export function CrosswordGamePanel({ state }: Props) {
                   ].join(" ")}
                 >
                   <p className="text-sm font-black uppercase tracking-[0.16em] text-yellow">
-                    {revealedByAttempts && modalRowIsActive ? "Đã sai 3 lần" : "Đáp án"}
+                    {revealedByAttempts && modalRowIsActive ? "Tất cả nhóm đã sai" : "Đáp án"}
                   </p>
                   <p className="mt-1 break-words text-game-sm font-black text-white">
                     Đáp án: {currentRow.answerText}

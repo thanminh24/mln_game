@@ -29,7 +29,9 @@ export function useHostKeyboard(state: GameState) {
 
         case "KeyK":
           e.preventDefault();
-          if (!state.keywordSolved && state.openedRows.length >= 2) emit("game:solve_keyword");
+          if (!state.keywordSolved && state.openedRows.length >= 2) {
+            emit("game:solve_keyword", { correct: true });
+          }
           break;
 
         case "Escape":

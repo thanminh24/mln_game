@@ -9,6 +9,8 @@ export interface CrosswordRow {
   answerAscii: string;
   wordLength: number;
   colOffset: number;
+  difficulty: "easy" | "medium" | "hard";
+  points: number;
   questionText: string;
   answerText: string;
   correctOptionId: string;
@@ -25,6 +27,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "LACHAU",
     wordLength: 6,
     colOffset: 12,
+    difficulty: "medium",
+    points: 20,
     questionText:
       "Dù đời sống vật chất đã phát triển hiện đại nhưng những hủ tục tinh thần này vẫn tồn tại là do tính chất gì của ý thức xã hội?",
     answerText: "LẠC HẬU",
@@ -43,6 +47,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "TONTAIXAHOI",
     wordLength: 11,
     colOffset: 11,
+    difficulty: "medium",
+    points: 20,
     questionText:
       "Những điều kiện sinh hoạt vật chất như địa lý, sông ngòi, bão lũ này tạo nên phạm trù nào quyết định tâm lý dân tộc?",
     answerText: "TỒN TẠI XÃ HỘI",
@@ -61,6 +67,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "DANSO",
     wordLength: 5,
     colOffset: 10,
+    difficulty: "easy",
+    points: 10,
     questionText:
       "Ngoài hoàn cảnh địa lý và phương thức sản xuất, yếu tố nào của tồn tại xã hội đóng vai trò là nguồn lực con người để xây dựng và bảo vệ đất nước?",
     answerText: "DÂN SỐ",
@@ -78,6 +86,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "GIAICAP",
     wordLength: 7,
     colOffset: 12,
+    difficulty: "easy",
+    points: 10,
     questionText:
       "Khi xã hội có sự phân chia lợi ích, ý thức xã hội phản ánh địa vị và nguyện vọng của các tầng lớp khác nhau. Đây là tính ... của ý thức xã hội.",
     answerText: "GIAI CẤP",
@@ -95,6 +105,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "YTHUCXAHOI",
     wordLength: 10,
     colOffset: 12,
+    difficulty: "medium",
+    points: 20,
     questionText:
       "Những tình cảm, niềm tin và truyền thống đùm bọc lẫn nhau trong thời kỳ COVID-19 này được gọi chung là gì?",
     answerText: "Ý THỨC XÃ HỘI",
@@ -113,6 +125,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "KETHUA",
     wordLength: 6,
     colOffset: 11,
+    difficulty: "hard",
+    points: 30,
     questionText:
       "Truyền thống yêu nước được truyền từ đời này sang đời khác, tạo nên sức mạnh xuyên suốt hàng nghìn năm lịch sử. Điều này minh chứng cho tính chất gì của ý thức xã hội?",
     answerText: "KẾ THỪA",
@@ -130,6 +144,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "PHUONGTHUCSANXUAT",
     wordLength: 17,
     colOffset: 10,
+    difficulty: "medium",
+    points: 20,
     questionText:
       "Đây là yếu tố cơ bản nhất của tồn tại xã hội, quy định nên lối sống trọng tình nghĩa và tính cộng đồng của người Việt?",
     answerText: "PHƯƠNG THỨC SẢN XUẤT",
@@ -148,6 +164,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "QUYETDINH",
     wordLength: 9,
     colOffset: 5,
+    difficulty: "easy",
+    points: 10,
     questionText:
       "Điền vào chỗ trống: Theo triết học Mác - Lênin, đời sống vật chất (tồn tại xã hội) đóng vai trò _______ đời sống tinh thần (ý thức xã hội).",
     answerText: "QUYẾT ĐỊNH",
@@ -165,6 +183,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "VUOTTRUOC",
     wordLength: 9,
     colOffset: 11,
+    difficulty: "medium",
+    points: 20,
     questionText:
       "Những tư tưởng cứu nước của Chủ tịch Hồ Chí Minh có khả năng dự báo xu hướng lịch sử khi tồn tại xã hội chưa biến đổi hết là do tính chất gì của ý thức xã hội?",
     answerText: "VƯỢT TRƯỚC",
@@ -182,6 +202,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "TACDONGTROLAI",
     wordLength: 13,
     colOffset: 8,
+    difficulty: "hard",
+    points: 30,
     questionText:
       "Lòng yêu nước, một hình thái ý thức tinh thần, đã biến thành sức mạnh vật chất đánh bại vũ khí hiện đại trong chiến dịch này. Đây là sự ... của ý thức xã hội.",
     answerText: "TÁC ĐỘNG TRỞ LẠI",
@@ -200,6 +222,8 @@ export const CROSSWORD_ROWS: CrosswordRow[] = [
     answerAscii: "BIENCHUNG",
     wordLength: 9,
     colOffset: 8,
+    difficulty: "hard",
+    points: 30,
     questionText:
       "Mối quan hệ tương tác hai chiều, không tách rời giữa vật chất (tồn tại xã hội) và tinh thần (ý thức xã hội) được gọi là mối quan hệ gì?",
     answerText: "BIỆN CHỨNG",

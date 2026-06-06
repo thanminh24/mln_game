@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { GameState } from "../types/shared";
 import { CASE_STUDY_SUMMARY, KEYWORD, KEYWORD_ASCII } from "../data/game-data";
 import { DialecticDiagram } from "../components/dialectic-diagram";
 
 export function SummaryPage() {
   const [state, setState] = useState<GameState | null>(null);
+  const teams = [...(state?.teams ?? [])].sort((a, b) => b.score - a.score);
+  const winner = teams[0];
 
   useEffect(() => {
     fetch("/api/state")
@@ -25,9 +28,29 @@ export function SummaryPage() {
         <p className="mt-4 text-sm font-black uppercase tracking-[0.28em] text-muted">
           {KEYWORD_ASCII}
         </p>
-        <div className="mt-8 rounded-xl border border-yellow/40 bg-yellow/5 px-8 py-4">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Điểm</p>
-          <p className="text-5xl font-black leading-none text-yellow">{state?.score ?? 0}</p>
+        <div className="mt-8 grid w-full max-w-5xl gap-3 md:grid-cols-5">
+          {teams.map((team, idx) => (
+            <div
+              key={team.id}
+              className={[
+                "rounded-xl border bg-surface px-5 py-4 text-left",
+                idx === 0 ? "border-yellow" : "border-border",
+              ].join(" ")}
+            >
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                <span className="h-3 w-3 rounded-full" style={{ backgroundColor: team.color }} />
+                {team.name}
+              </p>
+              <p className="mt-3 text-4xl font-black leading-none text-yellow">{team.score}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 rounded-xl border border-yellow/40 bg-yellow/5 px-8 py-4">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Đội dẫn đầu</p>
+          <p className="text-4xl font-black leading-none text-yellow">{winner?.name ?? "Chưa có"}</p>
+          <p className="mt-2 text-sm font-bold text-muted">
+            Mốc điểm hàng ngang: {state?.maxScore ?? 0}
+          </p>
         </div>
         <h2 className="mt-8 max-w-3xl text-game-sm font-black leading-tight text-white">
           Lòng yêu nước trong mối quan hệ biện chứng giữa tồn tại xã hội và ý thức xã hội
@@ -50,6 +73,15 @@ export function SummaryPage() {
           nó có thể trở thành động lực tổ chức hành động, củng cố niềm tin, định hướng
           cộng đồng và tác động trở lại tồn tại xã hội.
         </blockquote>
+      </section>
+
+      <section className="flex justify-center px-5 pb-16">
+        <Link
+          to="/"
+          className="rounded-md border border-yellow-dim bg-[#1A1600] px-5 py-3 text-sm font-bold text-yellow hover:bg-yellow hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+        >
+          Quay lại bảng chơi
+        </Link>
       </section>
     </div>
   );

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SocketProvider } from "./context/socket-context";
 import { HostView } from "./views/host-view";
+import { SummaryPage } from "./views/summary-page";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
             </SocketProvider>
           }
         />
+        <Route path="/summary" element={<SummaryPage />} />
       </Routes>
     </BrowserRouter>
   );

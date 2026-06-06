@@ -5,6 +5,11 @@ import { CROSSWORD_ROWS, KEYWORD, KEYWORD_ASCII } from "../data/game-data";
 
 const TOTAL_COLS = 30;
 const KEYWORD_COL = 12;
+const DIFFICULTY_LABELS = {
+  easy: "Dễ",
+  medium: "Vừa",
+  hard: "Khó",
+};
 
 interface Props {
   state: GameState;
@@ -13,13 +18,14 @@ interface Props {
 
 export function CrosswordGrid({ state, onSelectRow }: Props) {
   const { openedRows, keywordSolved } = state;
+  const allRowsOpened = openedRows.length === CROSSWORD_ROWS.length;
 
   return (
     <div className="relative w-full min-w-0">
       <div className="flex flex-col gap-[3px]">
         {CROSSWORD_ROWS.map((row, rowIdx) => {
           const revealed = openedRows.includes(rowIdx);
-          const canSelect = Boolean(onSelectRow) && !keywordSolved;
+          const canSelect = Boolean(onSelectRow) && !allRowsOpened;
 
           return (
             <div
@@ -48,6 +54,9 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
               <div className="w-6 shrink-0 text-right text-[10px] font-bold text-[#555555]">
                 {rowIdx + 1}
               </div>
+              <div className="hidden w-20 shrink-0 text-xs font-black text-muted sm:block">
+                {DIFFICULTY_LABELS[row.difficulty]} · {row.points}
+              </div>
               <div
                 className="grid min-w-0 flex-1 gap-[3px]"
                 style={{ gridTemplateColumns: `repeat(${TOTAL_COLS}, minmax(0, 1fr))` }}
@@ -67,12 +76,15 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
                     );
                   }
 
-                  const letter = revealed ? row.answerAscii[col - row.colOffset] : "";
+                  const keywordRevealed = keywordSolved && isKeywordCol;
+                  const letter = revealed || keywordRevealed ? row.answerAscii[col - row.colOffset] : "";
                   const staggerDelay = `${(col - row.colOffset) * 35}ms`;
                   const cellState = revealed
                     ? isKeywordCol
                       ? "border-2 border-yellow bg-white text-black"
                       : "border border-yellow-dim bg-yellow text-black"
+                    : keywordRevealed
+                      ? "border-2 border-yellow bg-yellow text-black"
                     : isKeywordCol
                       ? "border border-yellow bg-surface text-white"
                       : "border border-[#333333] bg-surface text-white";
@@ -103,7 +115,7 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
         })}
       </div>
 
-      {keywordSolved && (
+      {keywordSolved && allRowsOpened && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
           <div className="max-w-full rounded-lg border border-yellow bg-black px-6 py-4 text-center shadow-2xl">
             <p className="break-words text-game-md font-black leading-tight text-yellow">
