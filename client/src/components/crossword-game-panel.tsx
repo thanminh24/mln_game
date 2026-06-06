@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GameState } from "../types/shared";
 import { useSocket } from "../hooks/use-socket";
 import { CROSSWORD_ROWS } from "../data/game-data";
@@ -20,6 +20,7 @@ interface Props {
 
 export function CrosswordGamePanel({ state }: Props) {
   const { emit } = useSocket();
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalRowIdx, setModalRowIdx] = useState<number | null>(null);
   const { openedRows, activeRow, wrongOptionIds, wrongTeamIds, answerRevealed, keywordSolved, teams, activeTeamId, maxScore } = state;
@@ -38,6 +39,12 @@ export function CrosswordGamePanel({ state }: Props) {
   useEffect(() => {
     if (allRowsOpened) setModalOpen(false);
   }, [allRowsOpened]);
+
+  useEffect(() => {
+    if (allRowsOpened) {
+      navigate("/summary");
+    }
+  }, [allRowsOpened, navigate]);
 
   function handleReset() {
     if (window.confirm("Đặt lại toàn bộ trò chơi? Mọi điểm số sẽ bị xoá.")) {
