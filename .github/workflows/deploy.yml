@@ -37,9 +37,9 @@ jobs:
         id: meta
         run: echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
-      # Single container: builds + serves game client + backend together
+      # Game: Express + Socket.IO + built React client
       - name: Build & push mln-game
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
@@ -49,6 +49,19 @@ jobs:
             ghcr.io/${{ env.IMAGE_OWNER }}/mln-game:${{ steps.meta.outputs.sha }}
           cache-from: type=gha,scope=mln-game
           cache-to: type=gha,scope=mln-game,mode=max
+
+      # Landing page: static site via nginx:alpine (mln111g5.skinsunny.info.vn)
+      - name: Build & push mln-landing
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile.landing
+          push: true
+          tags: |
+            ghcr.io/${{ env.IMAGE_OWNER }}/mln-landing:latest
+            ghcr.io/${{ env.IMAGE_OWNER }}/mln-landing:${{ steps.meta.outputs.sha }}
+          cache-from: type=gha,scope=mln-landing
+          cache-to: type=gha,scope=mln-landing,mode=max
 
   deploy:
     name: Deploy to Hostinger
@@ -84,5 +97,7 @@ jobs:
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
             docker image prune -f
-            docker images "ghcr.io/${{ secrets.GHCR_OWNER }}/mln-game" --format "{{.ID}} {{.Tag}}" | sort -k2 -r | awk 'NR>2 {print $1}' | xargs -r docker rmi || true
+            for img in mln-game mln-landing; do
+              docker images "ghcr.io/${{ secrets.GHCR_OWNER }}/${img}" --format "{{.ID}} {{.Tag}}" | sort -k2 -r | awk 'NR>2 {print $1}' | xargs -r docker rmi || true
+            done
             echo "Deploy complete — SHA ${{ needs.build.outputs.sha }}"
