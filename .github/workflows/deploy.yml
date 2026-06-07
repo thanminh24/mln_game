@@ -70,20 +70,6 @@ jobs:
     if: success()
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # SCP compose file from the Actions runner — no git auth needed on server
-      - name: Copy compose file to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          source: "docker-compose.prod.yml"
-          target: /home/deploy/mln-game/
-          strip_components: 0
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         with:
@@ -92,8 +78,26 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           script: |
             set -e
-            cd /home/deploy/mln-game
+            mkdir -p /home/deploy/mln-game
+            cat > /home/deploy/mln-game/docker-compose.prod.yml << 'COMPOSE'
+            services:
+              mln-game:
+                image: ghcr.io/${{ secrets.GHCR_OWNER }}/mln-game:latest
+                ports:
+                  - "6942:6942"
+                environment:
+                  NODE_ENV: production
+                  PORT: "6942"
+                  APP_BASE_PATH: "/"
+                restart: unless-stopped
+              mln-landing:
+                image: ghcr.io/${{ secrets.GHCR_OWNER }}/mln-landing:latest
+                ports:
+                  - "6943:80"
+                restart: unless-stopped
+            COMPOSE
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_OWNER }}" --password-stdin
+            cd /home/deploy/mln-game
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
             docker image prune -f
