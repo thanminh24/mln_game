@@ -68,7 +68,7 @@ jobs:
           username: ${{ secrets.HOSTINGER_USER }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           source: "docker-compose.prod.yml"
-          target: ~/mln-game/
+          target: /home/deploy/mln-game/
           strip_components: 0
 
       - name: Deploy via SSH
@@ -79,7 +79,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           script: |
             set -e
-            cd ~/mln-game
+            cd /home/deploy/mln-game
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_OWNER }}" --password-stdin
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
