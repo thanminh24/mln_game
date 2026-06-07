@@ -51,10 +51,10 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
                   : "",
               ].join(" ")}
             >
-              <div className="w-6 shrink-0 text-right text-[10px] font-bold text-[#555555]">
+              <div className="w-8 shrink-0 text-right text-sm font-black text-[#777777]">
                 {rowIdx + 1}
               </div>
-              <div className="hidden w-20 shrink-0 text-xs font-black text-muted sm:block">
+              <div className="hidden w-28 shrink-0 text-sm font-black uppercase tracking-[0.08em] text-muted sm:block">
                 {DIFFICULTY_LABELS[row.difficulty]} · {row.points}
               </div>
               <div
@@ -95,8 +95,9 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
                       className={[
                         "aspect-square min-w-0 rounded-[2px]",
                         "flex items-center justify-center select-none",
-                        "font-mono text-[clamp(0.65rem,1.6vw,1.25rem)] font-black leading-none",
+                        "font-mono text-[clamp(0.72rem,1.7vw,1.35rem)] font-black leading-none",
                         cellState,
+                        isKeywordCol ? "shadow-[0_0_12px_rgba(255,215,0,0.18)]" : "",
                         revealed ? styles["cell-revealed"] : "",
                         !revealed && isKeywordCol ? styles["cell-keyword-pulse"] : "",
                         keywordSolved && isKeywordCol ? styles["cell-keyword-flash"] : "",
@@ -115,10 +116,10 @@ export function CrosswordGrid({ state, onSelectRow }: Props) {
         })}
       </div>
 
-      {keywordSolved && allRowsOpened && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="max-w-full rounded-lg border border-yellow bg-black px-6 py-4 text-center shadow-2xl">
-            <p className="break-words text-game-md font-black leading-tight text-yellow">
+      {allRowsOpened && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+          <div className="max-w-full rounded-lg border border-yellow bg-black px-8 py-6 text-center shadow-[0_0_60px_rgba(255,215,0,0.25)]">
+            <p className="break-words text-game-lg font-black leading-tight text-yellow">
               TỪ KHÓA: {KEYWORD}
             </p>
             <p className="mt-2 text-sm font-bold uppercase tracking-[0.2em] text-muted">

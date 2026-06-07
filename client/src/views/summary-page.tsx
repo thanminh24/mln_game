@@ -17,23 +17,33 @@ export function SummaryPage() {
   }, []);
 
   return (
-    <div className="min-h-dvh bg-black text-white font-vietnamese">
+    <div className="min-h-dvh bg-[linear-gradient(180deg,#050505_0%,#111_55%,#000_100%)] text-white font-vietnamese">
       <section className="flex min-h-[88dvh] flex-col items-center justify-center px-5 py-14 text-center">
         <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-yellow">
           MLN111 · Triết học Mác - Lênin
         </p>
-        <h1 className="max-w-5xl break-words text-[clamp(3rem,9vw,6.5rem)] font-black leading-none text-yellow">
+        <p className="mb-3 rounded-full border border-yellow-dim bg-[#1A1600] px-5 py-2 text-xs font-black uppercase tracking-[0.18em] text-yellow">
+          Từ khóa cuối cùng
+        </p>
+        <h1 className="max-w-5xl break-words text-[clamp(3.4rem,9vw,7rem)] font-black leading-none text-yellow">
           {KEYWORD}
         </h1>
         <p className="mt-4 text-sm font-black uppercase tracking-[0.28em] text-muted">
           {KEYWORD_ASCII}
         </p>
+
+        <div className="mt-8 rounded-xl border border-yellow bg-black px-8 py-5 shadow-[0_0_60px_rgba(255,215,0,0.22)]">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted">Nhóm thắng cuộc</p>
+          <p className="mt-2 text-5xl font-black leading-none text-yellow">{winner?.name ?? "Chưa có"}</p>
+          <p className="mt-2 text-lg font-black text-white">{winner?.score ?? 0} điểm</p>
+        </div>
+
         <div className="mt-8 grid w-full max-w-5xl gap-3 md:grid-cols-5">
           {teams.map((team, idx) => (
             <div
               key={team.id}
               className={[
-                "rounded-xl border bg-surface px-5 py-4 text-left",
+                "rounded-lg border bg-surface px-5 py-4 text-left shadow-[0_10px_24px_rgba(0,0,0,0.28)]",
                 idx === 0 ? "border-yellow" : "border-border",
               ].join(" ")}
             >
@@ -42,17 +52,12 @@ export function SummaryPage() {
                 {team.name}
               </p>
               <p className="mt-3 text-4xl font-black leading-none text-yellow">{team.score}</p>
+              <p className="mt-2 text-xs font-black uppercase tracking-[0.12em] text-muted">Hạng {idx + 1}</p>
             </div>
           ))}
         </div>
-        <div className="mt-5 rounded-xl border border-yellow/40 bg-yellow/5 px-8 py-4">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Đội dẫn đầu</p>
-          <p className="text-4xl font-black leading-none text-yellow">{winner?.name ?? "Chưa có"}</p>
-          <p className="mt-2 text-sm font-bold text-muted">
-            Mốc điểm hàng ngang: {state?.maxScore ?? 0}
-          </p>
-        </div>
-        <h2 className="mt-8 max-w-3xl text-game-sm font-black leading-tight text-white">
+
+        <h2 className="mt-10 max-w-3xl text-game-sm font-black leading-tight text-white">
           Lòng yêu nước trong mối quan hệ biện chứng giữa tồn tại xã hội và ý thức xã hội
         </h2>
         <p className="mt-5 max-w-4xl text-xl font-semibold leading-relaxed text-muted">
