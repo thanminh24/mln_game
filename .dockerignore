@@ -1,0 +1,29 @@
+# Dependencies (reinstalled inside the image)
+node_modules
+**/node_modules
+
+# Build outputs (rebuilt inside the image)
+**/dist
+**/.vite
+
+# Off-limit landing pages — not part of the game container yet
+MLN_test-layout
+MLN_test-layout.zip
+MLN(chua_fix_fluidbg)
+
+# VCS / CI / docs / planning
+.git
+.github
+plans
+docs
+*.md
+
+# Env / secrets
+.env
+.env.*
+
+# Misc
+*.docx
+.vscode
+.idea
+.DS_Store

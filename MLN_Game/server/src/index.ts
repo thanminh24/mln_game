@@ -10,7 +10,8 @@ import { registerSocketHandlers } from "./sockets";
 
 const app = express();
 const httpServer = http.createServer(app);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 6942;
+const APP_BASE_PATH = process.env.APP_BASE_PATH || "/";
 
 // In-memory game state
 let state: GameState = initialState();
@@ -30,8 +31,10 @@ app.use(createRouter(getState));
 // Serve built client in production
 if (process.env.NODE_ENV === "production") {
   const clientBuildPath = path.join(__dirname, "../../client/dist");
-  app.use(express.static(clientBuildPath));
-  app.get("*", (_req, res) => {
+  const staticRoute = APP_BASE_PATH === "/" ? "/" : APP_BASE_PATH;
+
+  app.use(staticRoute, express.static(clientBuildPath));
+  app.get(`${staticRoute === "/" ? "" : staticRoute}/*`, (_req, res) => {
     res.sendFile(path.join(clientBuildPath, "index.html"));
   });
 }

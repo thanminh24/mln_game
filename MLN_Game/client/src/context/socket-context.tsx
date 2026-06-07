@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { socketServerUrl } from "../config/runtime-config";
 import { GameState, ServerToClientEvents, ClientToServerEvents } from "../types/shared";
 
 type AppSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -45,7 +46,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    const s: AppSocket = io(window.location.origin, {
+    const s: AppSocket = io(socketServerUrl, {
       reconnectionDelay: 1000,
       reconnectionAttempts: Infinity,
     });

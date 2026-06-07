@@ -37,8 +37,16 @@ game_state.json
 
 # Node.js
 node_modules/
-client/dist/
-server/dist/
+MLN_Game/client/dist/
+MLN_Game/server/dist/
 
 # Vite
-client/.vite/
+MLN_Game/client/.vite/
+
+# Large archives / source docs (not for VCS)
+*.zip
+*.docx
+
+# Landing page layouts (work in progress — excluded until finalized)
+MLN_test-layout/
+MLN(chua_fix_fluidbg)/

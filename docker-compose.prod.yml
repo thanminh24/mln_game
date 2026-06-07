@@ -1,0 +1,11 @@
+services:
+  mln-game:
+    image: ghcr.io/thanminh24/mln-game:latest
+    ports:
+      # Host 6942 -> container 6942. Point Cloudflare / reverse proxy here.
+      - "6942:6942"
+    environment:
+      NODE_ENV: production
+      PORT: "6942"
+      APP_BASE_PATH: "/"
+    restart: unless-stopped
