@@ -335,15 +335,14 @@ export default function App() {
           copyClassName="col hero-inner"
           steps={[
             <div className="hero-sequence__step hero-sequence__step--title">
+              <p className="hero-group-tag">{INTRO.group.class} &mdash; {INTRO.group.name}</p>
               <h1>{INTRO.title}</h1>
+              <p className="hero-subtitle">{INTRO.subtitle}</p>
             </div>,
-            ...INTRO.questions.map((question) => (
-              <div className="hero-sequence__step hero-sequence__step--question" key={question.highlight}>
-                <p>
-                  {question.text} <strong>{question.highlight}</strong>
-                </p>
-              </div>
-            )),
+            <div className="hero-sequence__step hero-sequence__step--question">
+              <p className="hero-hook__question">{INTRO.hook.question}</p>
+              <p className="hero-hook__prompt">{INTRO.hook.prompt}</p>
+            </div>,
             <div className="hero-sequence__step hero-sequence__step--answer">
               <p className="hero-answer__lead">{INTRO.answer.body}</p>
               <ul className="points">
@@ -538,25 +537,34 @@ export default function App() {
         </FadeBlock>
       </section>
 
-      <section className="sec sec-light statement-list">
-        <div className="col">
-          <RevealText as="span" className="eyebrow" text="Chương 03" />
-          <RevealText as="h2" text={BIEN_CHUNG.headline} />
-          {BIEN_CHUNG.coreAspects.map((aspect, index) => (
-            <article className="statement-row" key={aspect.title}>
-              <div className="statement-row__num">{`0${index + 1}`}</div>
-              <div className="statement-row__copy">
-                <RevealText as="h3" text={aspect.title} />
-                <FadeBlock as="ul" className="points">
-                  {aspect.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </FadeBlock>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <SequenceStage
+        id="bien-chung"
+        className="section-hero section-hero--bc"
+        image={IMAGES.bienChungSequence}
+        alt="Biện chứng giữa tồn tại xã hội và ý thức xã hội"
+        overlayClassName="section-hero__overlay"
+        copyClassName="col section-hero__copy"
+        steps={[
+          <div className="section-hero__step bc-step">
+            <span className="eyebrow">Chương 03</span>
+            <h2>{BIEN_CHUNG.headline}</h2>
+            <p className="bc-step__example">{BIEN_CHUNG.sequenceIntro.body}</p>
+            <p className="bc-step__example bc-step__context">{BIEN_CHUNG.sequenceIntro.example}</p>
+          </div>,
+          ...BIEN_CHUNG.coreAspects.map((aspect) => (
+            <div className="section-hero__step bc-step" key={aspect.tag}>
+              <span className="eyebrow">{aspect.tag}</span>
+              <h3 className="bc-step__title">{aspect.title}</h3>
+              <ul className="bc-step__points">
+                {aspect.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+              <p className="bc-step__example">{aspect.example}</p>
+            </div>
+          )),
+        ]}
+      />
 
       <WordCarousel
         className="sec-black"
@@ -604,40 +612,56 @@ export default function App() {
         </FadeBlock>
       </section>
 
-      <section className="sec sec-dark case-section">
-        <div className="case-section__intro col-wide">
-          <RevealText as="span" className="eyebrow" text="Chương 04 — Vận dụng thực tiễn" />
-        </div>
-        {VAN_DUNG.caseStudies.map((study, index) => (
-          <article
-            className={`case-stage case-stage--fullbleed ${index === 1 ? "case-stage--doi-moi" : "case-stage--flood"}`}
-            key={study.id}
-          >
-            <img
-              className="stage-bg"
-              src={index === 0 ? IMAGES.caseFlood : IMAGES.caseDoiMoi}
-              alt={study.title}
-              loading="lazy"
-            />
-            <div className="case-stage__copy">
-              <RevealText as="h2" text={study.title} />
-              <div className="case-stage__steps">
-                {study.steps.map((step) => (
-                  <div key={`${study.id}-${step.label}`} className="case-step">
-                    <RevealText as="span" className="eyebrow" text={step.label} />
-                    <RevealText as="h3" text={step.title} />
-                    <FadeBlock as="ul" className="points">
-                      {step.points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </FadeBlock>
-                  </div>
+      <SequenceStage
+        id="van-dung"
+        className="section-hero section-hero--case"
+        image={IMAGES.caseFlood}
+        alt={VAN_DUNG.caseStudies[0].title}
+        overlayClassName="section-hero__overlay"
+        copyClassName="col section-hero__copy"
+        steps={[
+          <div className="section-hero__step bc-step">
+            <span className="eyebrow">Chương 04 — Vận dụng thực tiễn</span>
+            <h2 className="case-step__title">{VAN_DUNG.caseStudies[0].title}</h2>
+          </div>,
+          ...VAN_DUNG.caseStudies[0].steps.map((step) => (
+            <div className="section-hero__step bc-step" key={step.label}>
+              <span className="eyebrow">{step.label}</span>
+              <h3 className="bc-step__title">{step.title}</h3>
+              <ul className="bc-step__points">
+                {step.points.map((point) => (
+                  <li key={point}>{point}</li>
                 ))}
-              </div>
+              </ul>
             </div>
-          </article>
-        ))}
-      </section>
+          )),
+        ]}
+      />
+
+      <SequenceStage
+        className="section-hero section-hero--case"
+        image={IMAGES.caseDoiMoi}
+        alt={VAN_DUNG.caseStudies[1].title}
+        overlayClassName="section-hero__overlay"
+        copyClassName="col section-hero__copy"
+        steps={[
+          <div className="section-hero__step bc-step">
+            <span className="eyebrow">Vận dụng thực tiễn</span>
+            <h2 className="case-step__title">{VAN_DUNG.caseStudies[1].title}</h2>
+          </div>,
+          ...VAN_DUNG.caseStudies[1].steps.map((step) => (
+            <div className="section-hero__step bc-step" key={step.label}>
+              <span className="eyebrow">{step.label}</span>
+              <h3 className="bc-step__title">{step.title}</h3>
+              <ul className="bc-step__points">
+                {step.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          )),
+        ]}
+      />
 
       <section className="sec sec-light stats-band">
         <div className="col-wide">
@@ -650,38 +674,6 @@ export default function App() {
             </article>
           ))}
         </div>
-        </div>
-      </section>
-
-      <section className="sec sec-black statement-list">
-        <div className="col">
-          <RevealText as="span" className="eyebrow" text="Tư liệu bổ sung" />
-          <article className="statement-row statement-row--single">
-            <div className="statement-row__copy">
-              <RevealText as="h3" text="Vai trò phương pháp luận" />
-              <FadeBlock as="p" className="body">
-                {MISSING_CONTENT.mlnRole}
-              </FadeBlock>
-            </div>
-          </article>
-          <article className="statement-row statement-row--single">
-            <div className="statement-row__copy">
-              <RevealText as="h3" text="Tính kế thừa trong xây dựng văn hóa" />
-              <FadeBlock as="p" className="body">
-                {MISSING_CONTENT.inheritanceVietnam}
-              </FadeBlock>
-            </div>
-          </article>
-          <article className="statement-row statement-row--single">
-            <div className="statement-row__copy">
-              <RevealText as="h3" text="Dấu mốc lịch sử" />
-              <FadeBlock as="ul" className="points">
-                {MISSING_CONTENT.historicalBattles.map((battle) => (
-                  <li key={battle}>{battle}</li>
-                ))}
-              </FadeBlock>
-            </div>
-          </article>
         </div>
       </section>
 

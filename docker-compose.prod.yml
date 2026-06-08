@@ -2,10 +2,17 @@ services:
   mln-game:
     image: ghcr.io/thanminh24/mln-game:latest
     ports:
-      # Host 6942 -> container 6942. Point Cloudflare / reverse proxy here.
+      # Host 6942 -> container 6942. Nginx proxies game.skinsunny.info.vn here.
       - "6942:6942"
     environment:
       NODE_ENV: production
       PORT: "6942"
       APP_BASE_PATH: "/"
+    restart: unless-stopped
+
+  mln-landing:
+    image: ghcr.io/thanminh24/mln-landing:latest
+    ports:
+      # Host 6943 -> container 80. Nginx proxies mln111g5.skinsunny.info.vn here.
+      - "6943:80"
     restart: unless-stopped

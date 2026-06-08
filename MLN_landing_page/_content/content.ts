@@ -1,21 +1,18 @@
 export const INTRO = {
-  title: "TỒN TẠI XÃ HỘI & Ý THỨC XÃ HỘI",
-  questions: [
-    {
-      text: "Tại sao nền kinh tế số, làm việc tự do (Freelance) đã rất phổ biến, nhưng nhiều người lớn tuổi vẫn giữ quan niệm",
-      highlight: "\"phải vào biên chế nhà nước mới ổn định\"",
-    },
-    {
-      text: "Tại sao các ứng dụng đầu tư tài chính, chứng khoán và tiền mã hóa hiện nay cực kỳ phát triển, nhưng tâm lý phải",
-      highlight: "\"tích trữ vàng\" hay \"tấc đất cắm dùi\"",
-    },
-  ],
+  title: "MỐI QUAN HỆ BIỆN CHỨNG GIỮA TỒN TẠI XÃ HỘI VÀ Ý THỨC XÃ HỘI",
+  subtitle: "Qua đó phân tích về tinh thần đoàn kết, lòng yêu nước nồng nàn của dân tộc Việt Nam",
+  group: { class: "AI1903-ADS", name: "Nhóm 5" },
+  hook: {
+    question: "Tại sao qua hàng nghìn năm thiên tai, ngoại xâm và khủng hoảng — người Việt Nam vẫn đứng dậy và vươn lên?",
+    prompt: "Điều gì đã tạo nên sức mạnh phi thường đó?",
+  },
   answer: {
-    label: "Câu trả lời nằm ở quy luật triết học",
-    body: "Tồn tại xã hội (đời sống vật chất) và Ý thức xã hội (đời sống tinh thần) luôn tương tác với nhau.",
+    label: "Câu trả lời nằm ở mối quan hệ biện chứng",
+    body: "Hoàn cảnh vật chất khắc nghiệt đã hình thành nên ý thức dân tộc, và chính ý thức ấy quay trở lại, chuyển hóa thành sức mạnh vật chất để cải biến thực tại.",
     points: [
-      "Giải thích các hiện tượng xã hội hiện đại dưới góc nhìn triết học.",
-      "Khám phá quy luật tương tác giữa đời sống vật chất và đời sống tinh thần.",
+      "Tồn tại xã hội và Ý thức xã hội là gì?",
+      "Mối quan hệ biện chứng giữa hai phạm trù diễn ra như thế nào?",
+      "Điều đó lý giải tinh thần đoàn kết và lòng yêu nước Việt Nam ra sao?",
     ],
   },
   ctaLabel: "Bắt đầu học",
@@ -100,15 +97,34 @@ export const BIEN_CHUNG = {
     text: "Không phải ý thức của con người quyết định tồn tại của họ; trái lại, tồn tại xã hội của họ quyết định ý thức của họ.",
     author: "C. Mác",
   },
+  sequenceIntro: {
+    body: "Quan điểm duy vật lịch sử khẳng định, TTXH và YTXH có mối quan hệ biện chứng. Các hình thái YTXH không thụ động — chúng tác động ngược trở lại TTXH, trước hết là cơ sở kinh tế.",
+    example: "Nước Anh, thế kỷ XVIII. Máy hơi nước thay thế lao động thủ công — điểm khởi đầu của một trong những cuộc biến đổi TTXH lớn nhất lịch sử nhân loại.",
+  },
   coreAspects: [
-    { title: "Tồn Tại Xã Hội quyết định nguồn gốc, nội dung và hình thức của Ý Thức Xã Hội", points: ["Toàn bộ gốc rễ của sự phát triển xã hội loài người, kể cả ý thức của con người, đều nằm trong và bị quy định bởi sự phát triển của các điều kiện kinh tế - xã hội.", "Tồn Tại Xã Hội không chỉ quyết định sự hình thành của Ý Thức Xã Hội mà còn quyết định cả nội dung và hình thức biểu hiện của nó. Tồn Tại Xã Hội nào thì có Ý Thức Xã Hội ấy."] },
-    { title: "Tồn Tại Xã Hội quyết định tính giai cấp của Ý Thức Xã Hội", points: ["Trong một xã hội có sự phân chia giai cấp, thì Ý Thức Xã Hội nhất định cũng mang tính giai cấp.", "Điều kiện vật chất, vị thế kinh tế và lợi ích của các giai cấp khác nhau sẽ dẫn đến những quan điểm, tư tưởng chính trị, đạo đức hay pháp luật khác nhau, thậm chí đối lập nhau."] },
-    { title: "Tồn Tại Xã Hội biến đổi tất yếu dẫn đến Ý Thức Xã Hội biến đổi", points: ["Tồn Tại Xã Hội quyết định xu hướng vận động, sự biến đổi và sự phát triển của các hình thái Ý Thức Xã Hội.", "Khi Tồn Tại Xã Hội thay đổi, thì những tư tưởng, quan điểm về chính trị, pháp luật, triết học hay đạo đức, thẩm mỹ dù sớm hay muộn cũng sẽ có những sự thay đổi nhất định để phù hợp với thực tại mới."] },
+    {
+      tag: "01",
+      title: "Tồn Tại Xã Hội quyết định nguồn gốc, nội dung và hình thức của Ý Thức Xã Hội",
+      points: ["Toàn bộ gốc rễ của sự phát triển xã hội loài người, kể cả ý thức của con người, đều nằm trong và bị quy định bởi sự phát triển của các điều kiện kinh tế - xã hội.", "Tồn Tại Xã Hội không chỉ quyết định sự hình thành của Ý Thức Xã Hội mà còn quyết định cả nội dung và hình thức biểu hiện của nó. Tồn Tại Xã Hội nào thì có Ý Thức Xã Hội ấy."],
+      example: "Khi nhà máy trở thành nơi mưu sinh của triệu người, những câu hỏi chưa từng tồn tại bắt đầu xuất hiện: «Giờ làm bao nhiêu là hợp lý?», «Sức lao động có giá trị gì?». TTXH mới trực tiếp sinh ra ý thức về quyền lao động — một hình thái YTXH hoàn toàn mới.",
+    },
+    {
+      tag: "02",
+      title: "Tồn Tại Xã Hội quyết định tính giai cấp của Ý Thức Xã Hội",
+      points: ["Trong một xã hội có sự phân chia giai cấp, thì Ý Thức Xã Hội nhất định cũng mang tính giai cấp.", "Điều kiện vật chất, vị thế kinh tế và lợi ích của các giai cấp khác nhau sẽ dẫn đến những quan điểm, tư tưởng chính trị, đạo đức hay pháp luật khác nhau, thậm chí đối lập nhau."],
+      example: "Chủ xưởng (sở hữu máy móc) mang ý thức: «Lợi nhuận là quyền chính đáng». Công nhân (bán sức lao động) mang ý thức: «8 giờ làm việc là phẩm giá». Cùng một mái nhà máy, hai YTXH đối lập hoàn toàn vì hai TTXH hoàn toàn khác nhau.",
+    },
+    {
+      tag: "03",
+      title: "Tồn Tại Xã Hội biến đổi tất yếu dẫn đến Ý Thức Xã Hội biến đổi",
+      points: ["Tồn Tại Xã Hội quyết định xu hướng vận động, sự biến đổi và sự phát triển của các hình thái Ý Thức Xã Hội.", "Khi Tồn Tại Xã Hội thay đổi, thì những tư tưởng, quan điểm về chính trị, pháp luật, triết học hay đạo đức, thẩm mỹ dù sớm hay muộn cũng sẽ có những sự thay đổi nhất định để phù hợp với thực tại mới."],
+      example: "Khi phong trào Chartist buộc quốc hội ban hành Luật Lao động, YTXH tiến lên «quyền bầu cử và dân chủ». Rồi từ đó ra đời chủ nghĩa xã hội khoa học — YTXH mới nhất, cao nhất của thời đại đó.",
+    },
   ],
   laws: [
     { id: 1, tag: "Quy luật 01", title: "Ý Thức Xã Hội thường lạc hậu hơn Tồn Tại Xã Hội", theory: "Lịch sử xã hội loài người cho thấy, nhiều khi xã hội cũ đã mất đi rất lâu, song ý thức xã hội do xã hội đó sản sinh ra vẫn tiếp tục tồn tại. Điều này biểu hiện rõ nhất ở truyền thống, thói quen và tập quán.\n\nNguyên nhân: Do tồn tại xã hội diễn ra với tốc độ nhanh hơn khả năng phản ánh của ý thức xã hội; do sức mạnh của thói quen; và do các giai cấp lạc hậu thường bám chặt vào tư tưởng cũ để bảo vệ quyền lợi ích kỷ.", caseTitle: "\"Trọng tấm bằng đại học\" trong thời đại học online và chứng chỉ nghề", caseDesc: "Nhiều nhà tuyển dụng nay không yêu cầu bằng cấp, họ coi trọng kỹ năng và portfolio (Tồn Tại Xã Hội mới). Nhưng nhiều gia đình vẫn ép con 'phải đỗ đại học chính quy mới thành công' - di sản của thời bao cấp và nền kinh tế công nghiệp cũ." },
     { id: 2, tag: "Quy luật 02", title: "Ý Thức Xã Hội có thể vượt trước Tồn Tại Xã Hội", theory: "Trong những điều kiện nhất định, nhiều tư tưởng khoa học và triết học có thể vượt trước tồn tại xã hội của thời đại rất xa.\n\nSở dĩ Ý Thức Xã Hội có khả năng đó là do nó phản ánh đúng những mối liên hệ lôgích, khách quan, tất yếu, bản chất của Tồn Tại Xã Hội. Nhờ đó, nó đưa ra những dự báo phải rất lâu sau mới được thực tiễn xác nhận.", caseTitle: "Dự báo của C. Mác về tri thức và sự bùng nổ của AI tạo sinh", caseDesc: "Từ thế kỷ XIX, Mác đã nói: 'Tri thức sẽ trở thành lực lượng sản xuất trực tiếp'. Ngày nay, marketer dùng ChatGPT, kỹ sư dùng Copilot - tri thức và AI tạo ra của cải trực tiếp, không cần qua nhà máy." },
-    { id: 3, tag: "Quy luật 03", title: "Ý Thức Xã Hội có tính kế thừa", theory: "Tiến trình phát triển đời sống tinh thần cho thấy, các quan điểm lý luận, tư tưởng lớn của thời đại sau bao giờ cũng dựa vào những tiền đề đã có từ các giai đoạn lịch sử trước đó.\n\nTrong xã hội có giai cấp, giai cấp tiến bộ đang lên sẽ chọn kế thừa những tư tưởng tiến bộ. Trái lại, giai cấp lỗi thời bao giờ cũng chọn tiếp thu những lý thuyết bảo thủ để duy trì sự thống trị.", caseTitle: "Startup Việt Nam vừa dùng AI vừa giữ văn hóa họp mặt, ăn trưa cùng nhau", caseDesc: "Nhiều gia đình trẻ sống ở chung cư cao cấp, đi xe điện, dùng robot hút bụi, điều khiển nhà bằng AI. Nhưng vị trí trang trọng nhất vẫn luôn dành cho bàn thờ gia tiên - đạo hiếu được giữ nguyên qua các thế hệ." },
+    { id: 3, tag: "Quy luật 03", title: "Ý Thức Xã Hội có tính kế thừa", theory: "Tiến trình phát triển đời sống tinh thần cho thấy, các quan điểm lý luận, tư tưởng lớn của thời đại sau bao giờ cũng dựa vào những tiền đề đã có từ các giai đoạn lịch sử trước đó.\n\nTrong xã hội có giai cấp, giai cấp tiến bộ đang lên sẽ chọn kế thừa những tư tưởng tiến bộ. Trái lại, giai cấp lỗi thời bao giờ cũng chọn tiếp thu những lý thuyết bảo thủ để duy trì sự thống trị.", caseTitle: "Nước Đức thế kỷ XIX", caseDesc: "Vào đầu thế kỷ XIX, trình độ phát triển kinh tế của nước Đức kém xa so với nước Anh và nước Pháp. Thế nhưng, nền triết học của nước Đức lúc bấy giờ lại vượt xa hai nước kia. Điều này chứng tỏ, tư tưởng triết học Đức không sinh ra trực tiếp từ nền kinh tế nghèo nàn của họ lúc đó, mà nó đã kế thừa và phát triển từ cả một kho tàng di sản tư tưởng khổng lồ của nhân loại từ các thời kỳ trước." },
     { id: 4, tag: "Quy luật 04", title: "Sự tác động qua lại giữa các hình thái Ý Thức Xã Hội", theory: "Các hình thái Ý Thức Xã Hội phản ánh Tồn Tại Xã Hội theo những cách khác nhau, có vai trò khác nhau nhưng luôn có sự tác động qua lại với nhau.\n\nTùy vào từng thời đại mà một hình thái ý thức sẽ chiếm ưu thế. Trong thế giới đương đại, ý thức chính trị ngày càng đóng vai trò quan trọng và chi phối mạnh mẽ các hình thái ý thức khác.", caseTitle: "Lừa đảo bằng giọng nói AI và phản ứng xã hội", caseDesc: "Công nghệ AI clone giọng nói (khoa học) bị lợi dụng để gọi điện giả người thân. Hệ quả: ngân hàng cảnh báo, Bộ Công an điều tra, người dân nâng cao cảnh giác - khoa học buộc pháp luật, đạo đức, chính trị thay đổi." },
     { id: 5, tag: "Quy luật 05", title: "Ý Thức Xã Hội tác động trở lại Tồn Tại Xã Hội", theory: "Đây là biểu hiện quan trọng nhất. Mỗi hình thái Ý Thức Xã Hội đều có sự tác động ngược trở lại Tồn Tại Xã Hội, trước hết là tác động trở lại cơ sở kinh tế.\n\nHệ tư tưởng tiến bộ sẽ thúc đẩy mạnh mẽ sự phát triển các mặt của đời sống xã hội. Ngược lại, hệ tư tưởng lạc hậu, phản động sẽ kìm hãm, kéo lùi sự phát triển đó.", caseTitle: "Từ phong trào sống tối giản đến nền kinh tế chia sẻ", caseDesc: "Tích cực: tư tưởng 'Quốc gia khởi nghiệp', 'Chuyển đổi số', 'Làm chủ AI' tạo ra hàng loạt startup, hàng trăm nghìn việc làm và hàng tỷ USD GDP. Tiêu cực: tư duy 'việc nhẹ lương cao', 'làm giàu nhanh' dung túng cho lừa đảo qua mạng, khiến hàng nghìn gia đình phá sản." },
   ],

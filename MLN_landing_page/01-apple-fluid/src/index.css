@@ -255,6 +255,21 @@ h3 {
   color: rgba(246, 243, 237, 0.84);
 }
 
+.eg--light {
+  color: var(--on-light-soft);
+}
+
+.on-light {
+  color: var(--on-light);
+}
+
+.core-example {
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 0.5px solid var(--hair-light);
+  max-width: 72ch;
+}
+
 .points {
   display: grid;
   gap: 0.85rem;
@@ -265,7 +280,7 @@ h3 {
   position: relative;
   padding-left: 1.25rem;
   font-size: var(--t-body);
-  line-height: 1.72;
+  line-height: 1.85;
 }
 
 .points li::before {
@@ -356,13 +371,31 @@ h3 {
   max-width: 46rem;
 }
 
+.hero-group-tag {
+  font-size: clamp(0.72rem, 1.1vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.9rem;
+}
+
 .hero h1 {
-  max-width: 11ch;
+  max-width: 18ch;
   font-family: var(--serif-font);
   font-size: var(--t-hero);
   font-weight: 600;
-  line-height: 1.02;
+  line-height: 1.06;
   text-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+}
+
+.hero-subtitle {
+  margin-top: 1rem;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.70);
+  max-width: 40ch;
+  font-style: italic;
 }
 
 .hero-questions,
@@ -388,8 +421,24 @@ h3 {
 
 .hero-answer__lead {
   font-size: var(--t-h3);
-  line-height: 1.58;
+  line-height: 1.65;
   color: var(--on-dark);
+}
+
+.hero-hook__question {
+  font-family: var(--serif-font);
+  font-size: clamp(1.25rem, 2.6vw, 2rem);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--on-dark);
+  margin-bottom: 1rem;
+}
+
+.hero-hook__prompt {
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  font-style: italic;
 }
 
 .scroll-cue {
@@ -433,6 +482,67 @@ h3 {
 .section-hero--ytxh .sequence-stage__sticky::before {
   background:
     linear-gradient(to right, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.62) 42%, rgba(0, 0, 0, 0.18) 84%);
+}
+
+.section-hero--bc .sequence-stage__sticky::before {
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.60) 46%, rgba(0, 0, 0, 0.14) 88%);
+}
+
+.section-hero--bc .bc-step h2,
+.section-hero--bc .bc-step .bc-hero-title {
+  font-family: var(--serif-font);
+  font-size: var(--t-hero);
+  font-weight: 600;
+  line-height: 1.06;
+  text-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+  max-width: 18ch;
+}
+
+.bc-step__title {
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.bc-step__points {
+  padding-left: 1.1em;
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  opacity: 0.88;
+  line-height: 1.8;
+}
+
+.bc-step__example {
+  font-size: clamp(0.78rem, 1.3vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.75;
+  max-width: 42ch;
+  margin-top: 0.6rem;
+}
+
+.bc-step__context {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.18);
+}
+
+.section-hero--case .sequence-stage__sticky::before {
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.90) 0%, rgba(0, 0, 0, 0.65) 44%, rgba(0, 0, 0, 0.20) 86%);
+}
+
+.case-step__title {
+  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 .section-hero__copy {

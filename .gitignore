@@ -47,6 +47,9 @@ MLN_Game/client/.vite/
 *.zip
 *.docx
 
-# Landing page layouts (work in progress — excluded until finalized)
+# Unfinished layout variants (off-limits)
 MLN_test-layout/
 MLN(chua_fix_fluidbg)/
+
+# Landing page build artifacts
+MLN_landing_page/01-apple-fluid/dist/
