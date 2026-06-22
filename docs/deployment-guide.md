@@ -4,8 +4,8 @@
 
 The MLN landing page is hosted as a static site on GitHub Pages:
 
-- Repository: `thanminh24/mln_game`
-- Production URL: `https://thanminh24.github.io/mln_game/`
+- Repository: `thanminh24/mln111`
+- Production URL: `https://thanminh24.github.io/mln111/`
 - Source: `MLN_landing_page/01-apple-fluid/`
 - Workflow: `.github/workflows/deploy-pages.yml`
 
@@ -20,15 +20,15 @@ A push to `main` deploys when the landing app, shared landing content, or Pages 
 3. Uploads only the generated landing-page artifact.
 4. Deploys that artifact to the `github-pages` environment.
 
-The Vite `base` is relative, so bundled images, scripts, and styles work below the `/mln_game/` repository path and remain portable to a custom domain.
+The Vite `base` is relative, so bundled images, scripts, and styles work below the `/mln111/` repository path and remain portable to a custom domain.
 
 ## Manual deployment
 
 In GitHub, open **Actions → Deploy MLN landing page → Run workflow**. From the CLI:
 
 ```bash
-gh workflow run deploy-pages.yml --repo thanminh24/mln_game
-gh run watch --repo thanminh24/mln_game
+gh workflow run deploy-pages.yml --repo thanminh24/mln111
+gh run watch --repo thanminh24/mln111
 ```
 
 No environment variables or repository secrets are required.

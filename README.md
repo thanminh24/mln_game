@@ -2,6 +2,8 @@
 
 Scroll-driven Vietnamese learning page about the dialectical relationship between social existence and social consciousness.
 
+Live site: <https://thanminh24.github.io/mln111/>
+
 ## Landing page
 
 The public site lives in `MLN_landing_page/01-apple-fluid/`. It is a static React/Vite app designed for GitHub Pages, including repository-subpath-safe assets.
