@@ -53,3 +53,4 @@ MLN(chua_fix_fluidbg)/
 
 # Landing page build artifacts
 MLN_landing_page/01-apple-fluid/dist/
+MLN_landing_page/01-apple-fluid/site-output/

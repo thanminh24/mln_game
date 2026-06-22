@@ -1,48 +1,28 @@
-# MLN111 Host-Only Crossword
+# MLN — Tồn tại xã hội và Ý thức xã hội
 
-Single-player/host-only MLN111 classroom crossword game.
+Scroll-driven Vietnamese learning page about the dialectical relationship between social existence and social consciousness.
 
-## Run
+## Landing page
 
-```bash
-npm ci
-npm run dev
-```
-
-Open the client URL from Vite, usually `http://localhost:3001`.
-
-## Build
+The public site lives in `MLN_landing_page/01-apple-fluid/`. It is a static React/Vite app designed for GitHub Pages, including repository-subpath-safe assets.
 
 ```bash
-npm run build
+cd MLN_landing_page/01-apple-fluid
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Build for embedding under a landing page route:
+Production build:
 
 ```bash
-VITE_APP_BASE_PATH=/game npm run build
-APP_BASE_PATH=/game NODE_ENV=production npm start
+pnpm build
+pnpm preview
 ```
 
-## Current Game
+Pushes to `main` that affect the landing page automatically deploy through `.github/workflows/deploy-pages.yml`.
 
-- One crossword game.
-- 11 horizontal rows recap the dialectical relationship between social being and social consciousness.
-- Vertical keyword: `LÒNG YÊU NƯỚC` (`LONGYEUNUOC` in the ASCII grid).
-- Five selected rows include prompt images.
-- Host chooses answer options directly.
-- After 3 wrong attempts, the correct answer is revealed.
-- Summary page connects the keyword to a patriotism case study.
+## Archived game
 
-## Repository Shape
+`MLN_Game/` is retained as an archive. It is intentionally excluded from the GitHub Pages build and deployment; no game server or Socket.IO backend is hosted.
 
-- `client/` — React host UI.
-- `server/` — Express + Socket.IO state server.
-- `.github/workflows/ci.yml` — build check for pull requests and pushes to `main`.
-
-## Landing Page Integration
-
-- Default standalone route: `/`
-- Landing-page route mode: set `VITE_APP_BASE_PATH=/game` at build time and `APP_BASE_PATH=/game` at runtime.
-- Socket backend override: set `VITE_SOCKET_URL=https://your-game-api-domain` only if the game server is not served from the same origin.
-- Hostinger managed Node.js app: use build command `npm ci && npm run build`, start command `npm start`.
+See [the deployment guide](docs/deployment-guide.md) for publishing and rollback details.
